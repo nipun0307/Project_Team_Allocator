@@ -1,2 +1,5 @@
-var a=[5,6,7,10,11];
-console.log(a)
+var oriDomi = new OriDomi('.demo1', {
+    vPanels: 5,
+    ripple: true
+});
+oriDomi.reveal(40);
