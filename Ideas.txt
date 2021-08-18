@@ -11,3 +11,6 @@ I am having trouble initialising and installing oriDomi. Let me know if you are 
 
 Nevermind, oriDomi is not the right tool. It just creates a paper folding effect for things
 
+We can use p5.js library. It is for animation. i used it in third semester. here is one example: https://www.youtube.com/watch?v=VUHojV_c-9c
+https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw : This guys does all animation using p5.js
+
