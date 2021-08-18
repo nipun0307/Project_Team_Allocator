@@ -7,4 +7,7 @@ I think we can possibly checkout the following resources:
 This is more of an advanced curve generating library, but worth a look : http://paperjs.org/about/
 Nonetheless, oriDomi is better
 
-I am having trouble initialising and installing oriDomi. Let me know if you are able to do this
+I am having trouble initialising and installing oriDomi. Let me know if you are able to do this -- Done
+
+Nevermind, oriDomi is not the right tool. It just creates a paper folding effect for things
+

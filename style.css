@@ -1,9 +1,25 @@
-html, body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  canvas {
-    display: block;
-  }
+.demo {
+  display: block;
+  max-width: 100%;
+  position: relative;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.demo1 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 30rem;
+  color: #888;
+  background-image: url("http://oridomi.com/demo/images/road.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  font-size: 9rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: -0.3rem;
+  line-height: 1;
+  text-align: center;
+  padding-top: 4rem;
+}
   
