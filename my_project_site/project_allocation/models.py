@@ -40,10 +40,17 @@ class Project(models.Model):
     def __str__(self):
         return (self.id)
 
-
 class Peer_edges (models.Model):
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id')
     student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_roll_num')
+    peer_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='peer_roll_num')
+    status = models.SlugField(max_length=1, default="N")   
+    # N - Neutral , F - Friends , E - enemy
+
+class Projects_pref (models.Model):
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id')
+    student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_roll_num')
+    project_id = models.ForeignKey (Project, on_delete=models.CASCADE, related_name= 'project_id')
 
 class Student_Enrollment(models.Model):
     student_roll_num = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_roll_enrolled')
