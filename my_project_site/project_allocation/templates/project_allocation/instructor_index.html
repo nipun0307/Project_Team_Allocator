@@ -10,6 +10,9 @@
         * {
             font-family: 'poppins';
         }
+        body {
+            background-color:#F2F2F2;
+        }
     </style>
 </head>
 <body>
@@ -19,12 +22,12 @@
 
     {% for course in courses %}
         <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
-            <legend><h1>{{course.course_code}}</h1></legend>
-            &nbsp;
+            <legend style="margin-bottom: -10px;"><h1>{{course.course_code}}</h1></legend>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
-            &nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
-            &nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
         </fieldset>
     {% endfor %}

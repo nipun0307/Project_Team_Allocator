@@ -1,2 +1,17 @@
-<button> <a href="{% url 'project_allocation:instructor_index' %}"> Instructor </a></button> <br>
-<button> <a href = "{% url 'project_allocation:student_index' %}"> Student </a> </button>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    * {
+        font-family: 'poppins';
+    }
+    body {
+        margin-left: 40px; margin-top: 30px;
+        background-color:#f5f5f5;
+    }
+    #b1{
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+    <button id = "b1"> <a href="{% url 'project_allocation:instructor_index' %}"> Instructor </a></button> <br>
+    <button id ="b2"> <a href = "{% url 'project_allocation:student_index' %}"> Student </a> </button>
+</body>
