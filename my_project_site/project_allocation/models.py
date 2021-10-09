@@ -33,4 +33,6 @@ class Project(models.Model):
     def __str__(self):
         return self.project_name
 
-
+class Peer_edges (models.Model):
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id')
+    student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_roll_num')
