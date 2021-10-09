@@ -43,9 +43,9 @@ class Project(models.Model):
 
 # Class - 5
 class Peer_edges (models.Model):
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id')
-    student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_roll_num')
-    peer_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='peer_roll_num')
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_peer')
+    student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_id_peer')
+    peer_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='peer_id_peer')
     status = models.SlugField(max_length=1, default="N")   
     # N - Neutral , F - Friends , E - enemy
     def __str__ (self):
@@ -54,9 +54,9 @@ class Peer_edges (models.Model):
 
 # Class - 6
 class Projects_pref (models.Model):
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id')
-    student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_roll_num')
-    project_id = models.ForeignKey (Project, on_delete=models.CASCADE, related_name= 'project_id')
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_pref')
+    student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_id_pref')
+    project_id = models.ForeignKey (Project, on_delete=models.CASCADE, related_name= 'project_id_pref')
 
     def __str__ (self):
         return str(self.course_id) + "\t:\t" + str(self.student_roll_num) + "\t:\t" + str(self.project_id)
