@@ -1,14 +1,36 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 
 
-# class Course(models.Model):
+class Instructor(models.Model):
+    instructor_name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.instructor_name
     
-# class Course_Project(models.Model):
+class Student(models.Model):
+    student_roll_num = models.IntegerField(primary_key=True, validators=[MinValueValidator(1)])
+    student_name = models.CharField(max_length=40)
 
-# class Student(models.Model):
-    
-# class Student_Project_Preference(models.Model):
+    def __str__(self):
+        return str(self.student_roll_num)
 
-# class Student_Friend_Preference(models.Model):
+class Course(models.Model):
+    course_name = models.CharField(max_length=100)
+    instructor_id =  models.ForeignKey(Instructor, on_delete=models.CASCADE)
 
-# class Student_Enemy_Preference(models.Model):
+    def __str__(self):
+        return self.course_name
+
+class Project(models.Model):
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id')
+    project_name = models.CharField(max_length=200)
+    project_description = models.TextField()
+    team_size = models.IntegerField(validators=[MinValueValidator(1)])
+    num_teams = models.IntegerField(validators=[MinValueValidator(1)])
+    is_pub = models.BooleanField()
+
+    def __str__(self):
+        return self.project_name
+
+
