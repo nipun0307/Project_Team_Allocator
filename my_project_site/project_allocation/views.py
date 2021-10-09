@@ -29,8 +29,8 @@ def instructor_index(request):
 
     return render(request, 'project_allocation/instructor_index.html',context)
 
-def student_index (request):
-    dataset = Student_Enrollment.objects.filter(student_id = Student.id)
+def student_index (request, roll_num):
+    dataset = Student_Enrollment.objects.filter(student_roll_num = roll_num)
 
     context = {
         'courses' : dataset,
