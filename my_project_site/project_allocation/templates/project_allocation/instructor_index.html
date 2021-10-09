@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Allocation | Instructor | Main Page </title>
+</head>
+<body>
+    {% load template_filters %}
+
+    <button type="success">Add project list for new course</button>
+
+    {% for course in courses %}
+        <fieldset>
+            <legend><h1>{{course.course_code}}</h1></legend>
+            &nbsp;
+            <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
+            &nbsp;
+            <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
+            &nbsp;
+            <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
+        </fieldset>
+    {% endfor %}
+
+    
+    
+<!-- input type="submit" value="Vote" -->
+
+    
+</body>
+</html>
