@@ -29,5 +29,8 @@ def instructor_index(request):
 
     return render(request, 'project_allocation/instructor_index.html',context)
 
-def student_index (request, roll_num):
-    # display all the courses for now, use a 
+def student_index (request):
+    # display all the courses for now, use a id for student when implementing
+    courses = Course.objects.all()
+    context = {'courses' : courses,}
+    return  render (request, 'project_allocation/student_index.html', context)
