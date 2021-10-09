@@ -5,14 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Allocation | Instructor | Main Page </title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+        * {
+            font-family: 'poppins';
+        }
+    </style>
 </head>
 <body>
     {% load template_filters %}
 
-    <button type="success">Add project list for new course</button>
+    <button type="success" style = "margin-left: 50px; margin-top: 40px;">Add project list for new course</button>
 
     {% for course in courses %}
-        <fieldset>
+        <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
             <legend><h1>{{course.course_code}}</h1></legend>
             &nbsp;
             <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
@@ -22,6 +28,7 @@
             <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
         </fieldset>
     {% endfor %}
+    <!-- <div style="margin-top: 100 px;">content</div> -->
 
     
     
