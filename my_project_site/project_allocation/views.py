@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Instructor, Student, Course, Project, Student_Enrollment
+from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref
 
 def index(request):
     return render(request, 'project_allocation/index.html')
@@ -28,3 +28,6 @@ def instructor_index(request):
     }
 
     return render(request, 'project_allocation/instructor_index.html',context)
+
+def student_index (request):
+    courses = 
