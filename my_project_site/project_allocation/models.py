@@ -38,7 +38,7 @@ class Project(models.Model):
     num_teams = models.IntegerField(validators=[MinValueValidator(1)])
 
     def __str__(self):
-        return (self.id)
+        return str(self.id)
 
 
 # Class - 5

@@ -14,6 +14,12 @@
     <fieldset>
             <legend></legend>
             &nbsp;
+            <form action="" method=POST>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value=" + Add project">
+            </form>
+            <!--
             <span> Enter name : <input type="text"> </span>
             &nbsp;
             &nbsp;
@@ -21,7 +27,7 @@
             &nbsp;
             <span> Max teams : <input type="number"> </span>
             &nbsp;
-            <span> Max team size : <input type="number"> </span>
+            <span> Max team size : <input type="number"> </span> -->
     </fieldset>
 
     <h1> Existing projects  - {{ course.course_code }} </h1> 
