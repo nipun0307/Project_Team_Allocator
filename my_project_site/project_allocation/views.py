@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref
+
+from .forms import AddProjectToListForm
+
 
 def index(request):
     return render(request, 'project_allocation/index.html')
@@ -32,12 +35,29 @@ def instructor_index(request):
 
 
 def instructor_course(request, course_id):
+
     course = Course.objects.get(pk=course_id)
-    projects = Project.objects.filter(course_id = course_id)
+
+    added = False
+    if request.method == "POST":
+        form = AddProjectToListForm(request.POST)
+        if form.is_valid():
+            p = course.course_id_project.create(project_name = form.cleaned_data['project_name'], 
+                        project_description = form.cleaned_data['project_description'],
+                        team_size = form.cleaned_data['team_size'],
+                        num_teams = form.cleaned_data['num_teams'])
+            p.save()
+            return HttpResponseRedirect('/project_allocation/instructor/'+str(course_id))
+    else:
+        form = AddProjectToListForm  
+            
+    projects = Project.objects.filter(course_id = course_id, ).order_by('id').reverse()
 
     context = {
         'course': course, 
         'projects': projects,
+        'form': form,
+        'added': added,
     }
 
     return render(request, 'project_allocation/instructor_course.html',context)
