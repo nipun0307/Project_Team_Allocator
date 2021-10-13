@@ -22,7 +22,7 @@
 
     {% for course in courses %}
         <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
-            <legend style="margin-bottom: -10px;"><h1>{{course.course_code}}</h1></legend>
+            <legend style="margin-bottom: -10px;"><h1><a href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -31,12 +31,6 @@
             <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
         </fieldset>
     {% endfor %}
-    <!-- <div style="margin-top: 100 px;">content</div> -->
-
-    
-    
-<!-- input type="submit" value="Vote" -->
-
     
 </body>
 </html>
