@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Instructor, Student, Course, Project, Student_Enrollment
+from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref
 
 def index(request):
     return render(request, 'project_allocation/index.html')
+
 
 def instructor_index(request):
     courses = Course.objects.all()
@@ -30,7 +31,6 @@ def instructor_index(request):
     return render(request, 'project_allocation/instructor_index.html',context)
 
 
-
 def instructor_course(request, course_id):
     course = Course.objects.get(pk=course_id)
     projects = Project.objects.filter(course_id = course_id)
@@ -41,3 +41,12 @@ def instructor_course(request, course_id):
     }
 
     return render(request, 'project_allocation/instructor_course.html',context)
+
+
+def student_index (request):
+    dataset = Student_Enrollment.objects.filter(student_id = Student.id)
+
+    context = {
+        'courses' : dataset,
+    }
+    return render(request , 'project_allocation/student_index.html', context)
