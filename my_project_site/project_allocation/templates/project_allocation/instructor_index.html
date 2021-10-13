@@ -9,11 +9,11 @@
 <body>
     {% load template_filters %}
 
-    <button type="success">Add project list for new course</button>
+    <button>Add project list for new course</button>
 
     {% for course in courses %}
         <fieldset>
-            <legend><h1>{{course.course_code}}</h1></legend>
+            <legend><h1><a href="{% url 'project_allocation:instructor_course' course.id %}"> {{course.course_code}} </a> </h1></legend>
             &nbsp;
             <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
             &nbsp;
@@ -22,11 +22,6 @@
             <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
         </fieldset>
     {% endfor %}
-
-    
-    
-<!-- input type="submit" value="Vote" -->
-
     
 </body>
 </html>

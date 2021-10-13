@@ -28,3 +28,16 @@ def instructor_index(request):
     }
 
     return render(request, 'project_allocation/instructor_index.html',context)
+
+
+
+def instructor_course(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    projects = Project.objects.filter(course_id = course_id)
+
+    context = {
+        'course': course, 
+        'projects': projects,
+    }
+
+    return render(request, 'project_allocation/instructor_course.html',context)
