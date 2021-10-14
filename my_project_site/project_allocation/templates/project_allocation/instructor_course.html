@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Allocation | Instructor | Course - {{ course.course_code }} </title>
+</head>
+<body>
+    {% load template_filters %}
+
+    <h1> Create new project  - {{ course.course_code }} </h1> 
+
+    <fieldset>
+            <legend></legend>
+            &nbsp;
+            <form action="" method=POST>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value=" + Add project">
+            </form>
+            <!--
+            <span> Enter name : <input type="text"> </span>
+            &nbsp;
+            &nbsp;
+            <span> Description : <input type="text"> </span>
+            &nbsp;
+            <span> Max teams : <input type="number"> </span>
+            &nbsp;
+            <span> Max team size : <input type="number"> </span> -->
+    </fieldset>
+
+    <h1> Existing projects  - {{ course.course_code }} </h1> 
+
+    {% for project in projects %}
+        <fieldset>
+            <legend><h1>{{project.project_name}}</h1></legend>
+            &nbsp;
+            <span>  Description : {{ project.project_description }} </span>
+            &nbsp;
+            <span> Max teams : {{ project.num_teams }} </span>
+            &nbsp;
+            <span> Max team size : {{ project.team_size }} </span>
+        </fieldset>
+    {% endfor %}
+    
+</body>
+</html>
