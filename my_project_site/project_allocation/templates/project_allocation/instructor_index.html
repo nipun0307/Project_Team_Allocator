@@ -18,18 +18,30 @@
 <body>
     {% load template_filters %}
 
-    <button type="success" style = "margin-left: 50px; margin-top: 40px;">Add project list for new course</button>
+    <button type="success" style = "margin-left: 50px; margin-top: 40px;"
+            onclick="document.getElementById('add_course_to_index').style.display = 'block'">
+            Add project list for new course</button>
+
+    <div id='add_course_to_index' style="display:none; margin-left: 50px;">
+        <form action="" method=POST>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value=" + Add">
+        </form>
+    </div>    
 
     {% for course in courses %}
-        <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
-            <legend style="margin-bottom: -10px;"><h1><a href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
-        </fieldset>
+        {% if course not in not_created_courses %}
+            <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
+                <legend style="margin-bottom: -10px;"><h1><a href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
+            </fieldset>
+        {% endif %}
     {% endfor %}
     
 </body>
