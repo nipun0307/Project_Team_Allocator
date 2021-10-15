@@ -64,9 +64,25 @@ def instructor_course(request, course_id):
 
 
 def student_index (request):
-    dataset = Student_Enrollment.objects.filter(student_id = Student.id)
+    dataset = Course.objects.all()
 
     context = {
         'courses' : dataset,
     }
     return render(request , 'project_allocation/student_index.html', context)
+
+def student_course (request , course_id):
+    # when the student goes on the page whgere all his courses are displayed, we get the following:
+        # 1. The list of projects filtered by the course Id, only those projects which are is_published
+        # 2. Status of the project : description and all
+        # 3. And then a next button to go to friends and enemy page
+    dataset = Course.objects.get(pk=course_id)
+    context = {
+        'courses' : dataset,
+    }
+    return render ( request , 'project_allocation/student_course.html', context)
+
+def student_course_partner (request):
+    # partner_set = Peer_edges.objects.get(pk = course_id)
+    
+    return HttpResponse('project_allocation/student_fe.html')
