@@ -1,7 +1,13 @@
 from django import forms
 from django.forms import ModelForm
+from django.forms import ModelChoiceField
 
-from .models import Project
+from .models import Project, Course
+
+
+class MyModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return str(obj.course_code) + " -> " + obj.course_name
 
 # form for professor to add a new project in a specific course
 class AddProjectToListForm(ModelForm):
@@ -26,6 +32,14 @@ class AddProjectToListForm(ModelForm):
         }
 
         '''
+
+# form for professor to add a new project in a specific course
+class AddCourseToIndexForm(ModelForm):
+    class Meta:
+        model = Course
+        fields = ()
+
+    dropdown_choice = MyModelChoiceField(label=('Select course'), queryset=Course.objects.filter(is_created=False), empty_label='---')
 
 
 

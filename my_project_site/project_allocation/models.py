@@ -21,12 +21,17 @@ class Student(models.Model):
 # Class - 3
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
-    course_code = models.SlugField(max_length=30, default="course-code-not-applicable")
+    course_code = models.SlugField(max_length=30, unique=True)
     instructor_id =  models.ForeignKey(Instructor, on_delete=models.CASCADE)
     is_pub = models.BooleanField(default=False)
+    is_created  = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.id)
+
+    class Meta:
+        unique_together = ["course_code", "course_name"]
 
 
 # Class - 4
