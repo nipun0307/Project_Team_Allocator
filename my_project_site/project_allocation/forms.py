@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Project, Projects_pref
+from .models import Peer_edges, Project, Projects_pref
 
 # form for professor to add a new project in a specific course
 class AddProjectToListForm(ModelForm):
@@ -35,5 +35,14 @@ class AddProjectPref (ModelForm):
         model = Projects_pref
         fields=('student_roll_num','project_id')
 
+class AddFriends (ModelForm):
+    class Meta():
+        model = Peer_edges
+        fields = ('student_roll_num', 'peer_roll_num', 'status')
+
+class AddEnemies (ModelForm):
+    class Meta():
+        model = Peer_edges
+        fields = ('student_roll_num', 'peer_roll_num', 'status')
 
 

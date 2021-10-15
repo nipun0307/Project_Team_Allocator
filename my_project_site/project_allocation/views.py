@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref
 
-from .forms import AddProjectPref, AddProjectToListForm
+from .forms import AddFriends, AddProjectPref, AddProjectToListForm, AddEnemies
 
 
 def index(request):
@@ -78,6 +78,7 @@ def student_course (request, course_id):
     '''
     projects = Project.objects.filter(course_id=course_id)
     course = Course.objects.get(pk=course_id)
+    students = Student_Enrollment.objects.filter(course_id=course_id)
     num_projects = projects.count()
     ct=0
 
@@ -99,6 +100,37 @@ def student_course (request, course_id):
         'projects' : projects,
         'num' : int(num_projects),
         'ct' : ct,
+        'form' : form,
         'taken' : is_pref,
     }
     return render(request, 'project_allocation/student_course.html', context)
+
+def student_course_partner (request, course_id):
+    students = Student_Enrollment.objects.filter(course_id=course_id)
+    course = Course.objects.get(pk=course_id)
+    if (request.method=="POST"):
+        form_f = AddFriends(request.POST)
+        if form_f.is_valid():
+            data_f = course.course_id_peer.create(student_roll_num = form_f.cleaned_data['student_roll_num'], 
+                    peer_roll_num = form_f.cleaned_data['project_id'], status="F")
+            data_f.save()
+            return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
+
+    # elif (request.method=="POST_ENEMIES"):
+    #     form_e = AddFriends(request.POST)
+    #     if form_e.is_valid():
+    #         data_e = course.course_id_peer.create(student_roll_num = form_e.cleaned_data['student_roll_num'], 
+    #                 peer_roll_num = form_e.cleaned_data['project_id'], status="E")
+    #         data_e.save()
+    #         return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
+    
+    else:
+        form_f = AddFriends
+        form_e = AddEnemies
+    context={
+        'course' : course,
+        'students' : students,
+        'form_f' : form_f,
+        'form_e' : form_e,
+    }
+    return render(request, 'project_allocation/student_fe.html',context)

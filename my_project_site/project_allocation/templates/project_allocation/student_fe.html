@@ -4,9 +4,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student | Partners</title>
+    <title>Student | {{course.course_code}} | Partners</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+        * {
+            font-family: 'Lato';
+        }
+        body {
+            background-color: #f2f2f2;
+            padding-left: 20px;
+        }
+        h2 {
+            padding-bottom: 10px;
+        }
+        .head{
+            margin-left: 2vw;
+            font-size: 2em;
+        }
+        .footer{
+            margin-top: 3vw;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
-    
+    {% load template_filters %}
+    <br>
+    <div class="head">
+        <span style="float : left"> Nipun Mahajan</span>
+        <span style="float: right; margin-right: 2vw;">19110127</span>
+    </div>
+    <br>
+    <br>
+    <hr>
+    <div class="head" style="margin-top: 2vw; margin-bottom: 2vw;">
+        Enter {{course.course_code}} Project Partner Preferences
+    </div>
+
+    <fieldset style="width: 90%; margin:auto;">
+        <legend class="footer">Enter Friends</legend>
+        &nbsp;
+        <form action="" method=POST>
+            {% csrf_token %}
+            {{ form_f.as_data }}
+            <input type="submit" value=" + Add Friend">
+        </form>
+    </fieldset>
+    <br><hr><br>
+
+    <fieldset style="width: 90%;margin:auto;">
+        <legend class="footer">Enter Enemies</legend>
+        &nbsp;
+        <form action="" method=POST_ENEMIES>
+            {% csrf_token %}
+            {{ form_e.as_data }}
+            <input type="submit" value=" + Add Enemy">
+        </form>
+    </fieldset>
+
 </body>
 </html>

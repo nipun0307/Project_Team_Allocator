@@ -62,24 +62,15 @@
             {{ form.as_p }}
             <input type="submit" value=" + Add project">
         </form>
-        <!--
-        <span> Enter name : <input type="text"> </span>
-        &nbsp;
-        &nbsp;
-        <span> Description : <input type="text"> </span>
-        &nbsp;
-        <span> Max teams : <input type="number"> </span>
-        &nbsp;
-        <span> Max team size : <input type="number"> </span> -->
     </fieldset>
-
+    
 
     <div class="footer">
         Total Projects : <span><b>{{num}}</b></span>
     </div>
 
        
-
+    <button><a target="_self" href="{% url 'project_allocation:student_course_partner' course.id %}">Next</a></button>
 
 
     
