@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Project
+from .models import Project, Projects_pref
 
 # form for professor to add a new project in a specific course
 class AddProjectToListForm(ModelForm):
@@ -27,6 +27,13 @@ class AddProjectToListForm(ModelForm):
 
         '''
 
+'''
+Creating a form for the student where he can select the project he wants to take
+'''
+class AddProjectPref (ModelForm):
+    class Meta():
+        model = Projects_pref
+        fields=('student_roll_num','project_id')
 
 
 

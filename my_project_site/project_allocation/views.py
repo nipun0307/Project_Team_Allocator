@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref
 
-from .forms import AddProjectToListForm
+from .forms import AddProjectPref, AddProjectToListForm
 
 
 def index(request):
@@ -64,9 +64,41 @@ def instructor_course(request, course_id):
 
 
 def student_index (request):
-    dataset = Student_Enrollment.objects.filter(student_id = Student.id)
+    dataset = Course.objects.all()
 
     context = {
         'courses' : dataset,
     }
     return render(request , 'project_allocation/student_index.html', context)
+
+def student_course (request, course_id):
+    '''
+    When a student clicks any of his enrolled courses, he should see the list of all the projects attached to that course_id
+
+    '''
+    projects = Project.objects.filter(course_id=course_id)
+    course = Course.objects.get(pk=course_id)
+    num_projects = projects.count()
+    ct=0
+
+    is_pref = False
+    if (request.method=="POST"):
+        form = AddProjectPref(request.POST)
+        if form.is_valid():
+            p = course.course_id_pref.create(student_roll_num = form.cleaned_data['student_roll_num'], 
+                        project_id = form.cleaned_data['project_id'], )
+            p.save()
+            return HttpResponseRedirect('/project_allocation/student/'+str(course_id))
+    else:
+        form = AddProjectPref
+
+    if (num_projects>0):
+        ct=1
+    context={
+        'course' : course,
+        'projects' : projects,
+        'num' : int(num_projects),
+        'ct' : ct,
+        'taken' : is_pref,
+    }
+    return render(request, 'project_allocation/student_course.html', context)

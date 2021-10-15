@@ -18,15 +18,26 @@
         h2 {
             padding-bottom: 10px;
         }
+        .head{
+            font-size: 2em;
+        }
     </style>
 </head>
 <body>
     {% load template_filters %}
-    <h1>List of Enrolled Courses for : {Name}</h1>
+    <br>
+    <div class="head">
+        <span style="float : left"> Nipun Mahajan</span>
+        <span style="float: right; margin-right: 2vw;">19110127</span>
+    </div>
+    <br>
+    <br>
+    <hr>
+    <h1>List of Enrolled Courses</h1>
     {% for course in courses %}
     <ul>
        <li>
-        <h2> <a href="student_course.html" target=_blank>{{course.course_code}}</a></h2>
+        <h2> <a href="{% url 'project_allocation:student_course' course.id %}" target=_blank>{{course.course_code}}</a></h2>
        </li> 
     </ul>
     {% endfor %}
