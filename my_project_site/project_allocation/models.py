@@ -21,12 +21,17 @@ class Student(models.Model):
 # Class - 3
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
-    course_code = models.SlugField(max_length=30, default="course-code-not-applicable")
+    course_code = models.SlugField(max_length=30, unique=True)
     instructor_id =  models.ForeignKey(Instructor, on_delete=models.CASCADE)
     is_pub = models.BooleanField(default=False)
+    is_created  = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.id)
+
+    class Meta:
+        unique_together = ["course_code", "course_name"]
 
 
 # Class - 4
@@ -38,8 +43,16 @@ class Project(models.Model):
     num_teams = models.IntegerField(validators=[MinValueValidator(1)])
 
     def __str__(self):
-        return str(self.id)
+        return str(self.course_id ) +" : "+ str(self.id)
 
+
+# Class - 7
+class Student_Enrollment(models.Model):
+    student_roll_num = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_roll_enrolled')
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_enrolled')
+
+    def __str__(self):
+        return str(self.student_roll_num)+ ": " + str(self.course_id)
 
 # Class - 5
 class Peer_edges (models.Model):
@@ -62,10 +75,4 @@ class Projects_pref (models.Model):
         return str(self.course_id) + "\t:\t" + str(self.student_roll_num) + "\t:\t" + str(self.project_id)
 
 
-# Class - 7
-class Student_Enrollment(models.Model):
-    student_roll_num = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_roll_enrolled')
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_enrolled')
 
-    def __str__(self):
-        return str(self.student_roll_num)+ ": " + str(self.course_id)
