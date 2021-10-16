@@ -109,7 +109,7 @@ def student_course_partner (request, course_id):
     students = Student_Enrollment.objects.filter(course_id=course_id)
     course = Course.objects.get(pk=course_id)
     if (request.method=="POST"):
-        form_f = AddFriends(request.POST)
+        form_f = AddFriends(course_id,request.POST)
         if form_f.is_valid():
             data_f = course.course_id_peer.create(student_roll_num = form_f.cleaned_data['student_roll_num'], 
                     peer_roll_num = form_f.cleaned_data['peer_roll_num'], status=form_f.cleaned_data['status'])
@@ -125,12 +125,12 @@ def student_course_partner (request, course_id):
     #         return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
     
     else:
-        form_f = AddFriends
-        # form_e = AddEnemies
+        form_f = AddFriends(course_id)
+        form_e = AddEnemies(course_id)
     context={
         'course' : course,
         'students' : students,
         'form_f' : form_f,
-        # 'form_e' : form_e,
+        'form_e' : form_e,
     }
     return render(request, 'project_allocation/student_fe.html',context)
