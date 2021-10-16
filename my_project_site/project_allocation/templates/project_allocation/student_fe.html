@@ -35,6 +35,7 @@
         <span style="float: right; margin-right: 2vw;">19110127</span>
     </div>
     <br>
+
     <br>
     <hr>
     <div class="head" style="margin-top: 2vw; margin-bottom: 2vw;">
@@ -46,7 +47,7 @@
         &nbsp;
         <form action="" method=POST>
             {% csrf_token %}
-            {{ form_f.as_data }}
+            {{ form_f.as_p }}
             <input type="submit" value=" + Add Friend">
         </form>
     </fieldset>
@@ -57,7 +58,7 @@
         &nbsp;
         <form action="" method=POST_ENEMIES>
             {% csrf_token %}
-            {{ form_e.as_data }}
+            {{ form_e.as_p }}
             <input type="submit" value=" + Add Enemy">
         </form>
     </fieldset>

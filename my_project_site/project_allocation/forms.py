@@ -1,7 +1,8 @@
 from django import forms
+from django.db.models.query import QuerySet
 from django.forms import ModelForm
 
-from .models import Peer_edges, Project, Projects_pref
+from .models import Peer_edges, Project, Projects_pref, Student_Enrollment
 
 # form for professor to add a new project in a specific course
 class AddProjectToListForm(ModelForm):
@@ -36,13 +37,15 @@ class AddProjectPref (ModelForm):
         fields=('student_roll_num','project_id')
 
 class AddFriends (ModelForm):
+    
     class Meta():
         model = Peer_edges
-        fields = ('student_roll_num', 'peer_roll_num', 'status')
+        fields = ('student_roll_num', 'peer_roll_num','status')
+        student_roll_num = forms.MultipleChoiceField(queryset=Student_Enrollment.objects.filter(course_id=1))
+        
 
 class AddEnemies (ModelForm):
     class Meta():
         model = Peer_edges
         fields = ('student_roll_num', 'peer_roll_num', 'status')
-
-
+     
