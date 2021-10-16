@@ -2,7 +2,14 @@ from django import forms
 from django.db.models.query import QuerySet
 from django.forms import ModelForm
 
-from .models import Peer_edges, Project, Projects_pref, Student_Enrollment
+from .models import Peer_edges, Project, Projects_pref, Student, Student_Enrollment, Instructor
+
+peer_choice_enemy = (
+    ('E','Enemy'),
+)
+peer_choice_friend = (
+    ('F','Friend'),
+)
 
 # form for professor to add a new project in a specific course
 class AddProjectToListForm(ModelForm):
@@ -32,6 +39,12 @@ class AddProjectToListForm(ModelForm):
 Creating a form for the student where he can select the project he wants to take
 '''
 class AddProjectPref (ModelForm):
+    def __init__ (self, course_id, *args, **kwargs):
+        super(AddProjectPref, self).__init__(*args, **kwargs)
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
+        projects=Project.objects.filter(course_id=course_id).distinct()
+        self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
+        self.fields['project_id']=forms.ModelChoiceField(queryset=projects)
     class Meta():
         model = Projects_pref
         fields=('student_roll_num','project_id')
@@ -39,13 +52,12 @@ class AddProjectPref (ModelForm):
 class AddFriends (ModelForm):
     def __init__ (self, course_id, *args, **kwargs):
         super(AddFriends, self).__init__(*args, **kwargs)
-        students=Student_Enrollment.objects.filter(course_id=course_id)
-        lst=[]
-        for student in students:
-            lst.append(student.student_roll_num)
-        self.fields['student_roll_num']=forms.ChoiceField(choices=tuple([(roll,roll) for roll in lst]))
-        self.fields['peer_roll_num']=forms.ChoiceField(choices=tuple([(roll,roll) for roll in lst]))
-        # self.fields['status']= 'E'
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
+        # students= students.student_roll_enrolled.all()
+        
+        self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
+        self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
+        self.fields['status']= forms.ChoiceField(choices=peer_choice_friend)
     
     class Meta():
         model = Peer_edges
@@ -56,13 +68,12 @@ class AddFriends (ModelForm):
 class AddEnemies (ModelForm):
     def __init__ (self, course_id, *args, **kwargs):
         super(AddEnemies, self).__init__(*args, **kwargs)
-        students=Student_Enrollment.objects.filter(course_id=course_id)
-        lst=[]
-        for student in students:
-            lst.append(student.student_roll_num)
-        self.fields['student_roll_num']=forms.ChoiceField(choices=tuple([(int(roll), int(roll)) for roll in lst]))
-        self.fields['peer_roll_num']=forms.ChoiceField(choices=tuple([(int(roll), int(roll)) for roll in lst]))
-        # self.fields['status']= 'E'
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
+        # students= students.student_roll_enrolled.all()
+        
+        self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
+        self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
+        self.fields['status']= forms.ChoiceField(choices=peer_choice_enemy)
 
     class Meta():
         model = Peer_edges

@@ -25,6 +25,14 @@
             margin-top: 3vw;
             font-size: 1.2em;
         }
+        ul{
+            margin-top: 1vw;
+            font-size: 1.5em;
+            list-style-type: disc;
+        }
+        .lst{
+            margin-top: 1vw;
+        }
     </style>
 </head>
 <body>
@@ -39,12 +47,18 @@
     <hr>
     
     <div class="head">List of <b>Registered</b> Projects for {{course.course_code}}</div>
+    <ul>
+        {% for project in taken %}
+            <li class="lst">{{project.project_name}}</li>
+        {%endfor%}
+    </ul>
+    <!-- ==================================================================================== -->
     <br><br>
     <div class="head">List of <b>All</b> Projects for {{course.course_code}}</div>
     <ul>
         {% for project in projects %}
         <fieldset style= "margin-left: 1vw; margin-right: auto; width: 90%; margin-bottom: 10px;">
-            <legend style="margin-bottom: -10px;"><h1><a href="{% url 'project_allocation:instructor_course' course.id %}">{{project.project_name}}</a></h1></legend>
+            <legend style="margin-bottom: 10px; font-size: 1.5em;"><b>{{project.project_name}}</b></legend>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <span>{{project.project_description}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
