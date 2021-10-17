@@ -65,7 +65,7 @@ class AddFriends (ModelForm):
     
     class Meta():
         model = Peer_edges
-        fields = ('student_roll_num', 'peer_roll_num','status')
+        fields = ('student_roll_num', 'peer_roll_num', 'status')
         # student_roll_num_choices = forms.MultipleChoiceField(queryset=Student_Enrollment.objects.filter(course_id=1))
         
 

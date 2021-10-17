@@ -125,7 +125,8 @@ def student_course_partner (request, course_id):
                         peer_roll_num = form_f.cleaned_data['peer_roll_num'],)
             except Peer_edges.DoesNotExist:
                 data_f = course.course_id_peer.create(student_roll_num = form_f.cleaned_data['student_roll_num'], 
-                        peer_roll_num = form_f.cleaned_data['peer_roll_num'], status=form_f.cleaned_data['status'])
+                        peer_roll_num = form_f.cleaned_data['peer_roll_num'], status='F')
+                # data_f.status= 'F'
                 data_f.save()
                 return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
         # =============================================
