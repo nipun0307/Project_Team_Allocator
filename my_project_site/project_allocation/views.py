@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref
 
 from .forms import AddFriends, AddProjectPref, AddProjectToListForm, AddEnemies
-
+from django.core.exceptions import ValidationError
 
 def index(request):
     return render(request, 'project_allocation/index.html')
@@ -82,10 +82,18 @@ def student_course (request, course_id):
     if (request.method=="POST"):
         form = AddProjectPref(course_id,request.POST)
         if form.is_valid():
-            p = course.course_id_pref.create(student_roll_num = form.cleaned_data['student_roll_num'], 
+            try:
+                Projects_pref.objects.get( student_roll_num = Student.objects.get(student_roll_num=19110127), 
+                    # course_id=course_id,student_roll_num = form.cleaned_data['student_roll_num'], 
+                    project_id = form.cleaned_data['project_id'],)
+            except Projects_pref.DoesNotExist:
+                p = course.course_id_pref.create(student_roll_num = Student.objects.get(student_roll_num=19110127), 
                         project_id = form.cleaned_data['project_id'], )
-            p.save()
-            return HttpResponseRedirect('/project_allocation/student/'+str(course_id))
+                p.save()
+                return HttpResponseRedirect('/project_allocation/student/'+str(course_id))
+                # raise ValidationError('Exists Already!')
+            
+            
     else:
         form = AddProjectPref(course_id)
         
@@ -102,6 +110,7 @@ def student_course (request, course_id):
         'ct' : ct,
         'form' : form,
         'taken' : taken_projs,
+        'student_id' : 19110127,
     }
     return render(request, 'project_allocation/student_course.html', context)
 
@@ -111,10 +120,25 @@ def student_course_partner (request, course_id):
     if (request.method=="POST"):
         form_f = AddFriends(course_id,request.POST)
         if form_f.is_valid():
-            data_f = course.course_id_peer.create(student_roll_num = form_f.cleaned_data['student_roll_num'], 
-                    peer_roll_num = form_f.cleaned_data['peer_roll_num'], status=form_f.cleaned_data['status'])
-            data_f.save()
-            return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
+            try:
+                Peer_edges.objects.get(course_id=course_id, student_roll_num = form_f.cleaned_data['student_roll_num'], 
+                        peer_roll_num = form_f.cleaned_data['peer_roll_num'],)
+            except Peer_edges.DoesNotExist:
+                data_f = course.course_id_peer.create(student_roll_num = form_f.cleaned_data['student_roll_num'], 
+                        peer_roll_num = form_f.cleaned_data['peer_roll_num'], status=form_f.cleaned_data['status'])
+                data_f.save()
+                return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
+        # =============================================
+        form_e = AddEnemies(course_id,request.POST)
+        if form_e.is_valid():
+            try:
+                Peer_edges.objects.get(course_id=course_id, student_roll_num = form_e.cleaned_data['student_roll_num'], 
+                        peer_roll_num = form_e.cleaned_data['peer_roll_num'],)
+            except Peer_edges.DoesNotExist:
+                data_e = course.course_id_peer.create(student_roll_num = form_e.cleaned_data['student_roll_num'], 
+                        peer_roll_num = form_e.cleaned_data['peer_roll_num'], status=form_e.cleaned_data['status'])
+                data_e.save()
+                return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
 
     # elif (request.method=="POST_ENEMIES"):
     #     form_e = AddFriends(request.POST)

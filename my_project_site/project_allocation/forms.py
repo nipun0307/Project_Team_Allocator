@@ -43,11 +43,15 @@ class AddProjectPref (ModelForm):
         super(AddProjectPref, self).__init__(*args, **kwargs)
         students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
         projects=Project.objects.filter(course_id=course_id).distinct()
-        self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
+        # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['project_id']=forms.ModelChoiceField(queryset=projects)
     class Meta():
         model = Projects_pref
-        fields=('student_roll_num','project_id')
+        fields=('project_id',)
+
+        labels = {
+            "project_id" : "Project Name",
+        }
 
 class AddFriends (ModelForm):
     def __init__ (self, course_id, *args, **kwargs):

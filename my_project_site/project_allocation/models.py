@@ -17,7 +17,7 @@ class Instructor(models.Model):
 
 # Class - 2
 class Student(models.Model):
-    student_roll_num = models.IntegerField(primary_key=True, validators=[MinValueValidator(1)])
+    student_roll_num = models.IntegerField(primary_key=True, validators=[MinValueValidator(1)], unique=True)
     student_name = models.CharField(max_length=40)
 
     def __str__(self):
@@ -32,7 +32,7 @@ class Course(models.Model):
     is_pub = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.course_code)
 
 
 # Class - 4
@@ -45,7 +45,7 @@ class Project(models.Model):
 
     def __str__(self):
         return str(self.project_name)
-
+1   
 
 # Class - 7
 class Student_Enrollment(models.Model):
@@ -60,7 +60,12 @@ class Peer_edges (models.Model):
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_peer')
     student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_id_peer')
     peer_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='peer_id_peer')
-    status = models.SlugField(max_length=1, default="N")   
+    status = models.SlugField(max_length=1, default="N")
+    class Meta:
+        constraints = [
+        models.UniqueConstraint(fields=['course_id', 'student_roll_num', 'peer_roll_num'], name='unique_edges')
+        ]
+
     # N - Neutral , F - Friends , E - enemy
     def __str__ (self):
         return str(self.course_id) + "\t:\t(" + str(self.student_roll_num) + " , " + str(self.peer_roll_num) + ")\t:\t" + str(self.status)
@@ -70,7 +75,11 @@ class Peer_edges (models.Model):
 class Projects_pref (models.Model):
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_pref')
     student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_id_pref')
-    project_id = models.ForeignKey (Project, on_delete=models.CASCADE, related_name= 'project_id_pref')
+    project_id = models.ForeignKey (Project, on_delete=models.CASCADE, related_name= 'project_id_pref', verbose_name='Project Name')
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['course_id', 'student_roll_num', 'project_id'], name='unique_pref')
+        ]
 
     def __str__ (self):
         return str(self.course_id) + "\t:\t" + str(self.student_roll_num) + "\t:\t" + str(self.project_id)

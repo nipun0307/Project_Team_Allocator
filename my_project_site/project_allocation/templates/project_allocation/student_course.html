@@ -73,6 +73,7 @@
         &nbsp;
         <form action="" method=POST>
             {% csrf_token %}
+            <span>Enrollment Number:    </span>&nbsp;<b>{{student_id}}</b><br>
             {{ form.as_p }}
             <input type="submit" value=" + Add project">
         </form>
@@ -84,7 +85,7 @@
     </div>
 
        
-    <button><a target="_self" href="{% url 'project_allocation:student_course_partner' course.id %}">Next</a></button>
+    <button style="margin-top: 1vw; margin-bottom: 2vw; font-size: 1.2em;"><a target="_self" href="{% url 'project_allocation:student_course_partner' course.id %} " style="text-decoration: none;">Next</a></button>
 
 
     
