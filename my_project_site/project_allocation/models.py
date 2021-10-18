@@ -10,7 +10,7 @@ peer_choices = (
 # Class - 1
 class Instructor(models.Model):
     instructor_name = models.CharField(max_length=40)
-
+    intructor_email = models.EmailField(max_length=40, unique=True)
     def __str__(self):
         return str(self.id)
     
@@ -18,6 +18,7 @@ class Instructor(models.Model):
 # Class - 2
 class Student(models.Model):
     student_roll_num = models.IntegerField(primary_key=True, validators=[MinValueValidator(1)], unique=True)
+    student_email = models.EmailField (max_length=40, unique=True)
     student_name = models.CharField(max_length=40)
 
     def __str__(self):

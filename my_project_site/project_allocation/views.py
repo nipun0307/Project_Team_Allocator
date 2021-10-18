@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render
+from django.http import HttpResponse, HttpResponseRedirect, response
+from django.contrib.auth import logout
+from django.contrib.auth.models import User
 
 from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref
 
@@ -9,6 +11,19 @@ from django.core.exceptions import ValidationError
 def index(request):
     return render(request, 'project_allocation/index.html')
 
+def index_login (request):
+    if request.user.is_authenticated:
+        user = request.user
+        name= user['name']
+        context={'name':name}
+    else:
+        context={}
+    return render (request,'project_allocation/index_login.html', context)
+
+def logout_ (request):
+    logout(request)
+    response = redirect('/project_allocation/')
+    return response
 
 def instructor_index(request):
     courses = Course.objects.all()
