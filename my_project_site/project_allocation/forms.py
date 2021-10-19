@@ -54,9 +54,9 @@ class AddProjectPref (ModelForm):
         }
 
 class AddFriends (ModelForm):
-    def __init__ (self, course_id, *args, **kwargs):
+    def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddFriends, self).__init__(*args, **kwargs)
-        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).exclude(student_roll_num = roll_num)
         # students= students.student_roll_enrolled.all()
         
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
@@ -70,9 +70,9 @@ class AddFriends (ModelForm):
         
 
 class AddEnemies (ModelForm):
-    def __init__ (self, course_id, *args, **kwargs):
+    def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddEnemies, self).__init__(*args, **kwargs)
-        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).exclude(student_roll_num = roll_num)
         # students= students.student_roll_enrolled.all()
         
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)

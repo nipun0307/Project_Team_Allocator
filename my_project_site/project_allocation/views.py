@@ -11,6 +11,9 @@ from django.core.exceptions import ValidationError
 def index(request):
     return render(request, 'project_allocation/index.html')
 
+# ###########################################################################################
+# ###########################################################################################
+
 def index_login (request):
     if request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
@@ -21,10 +24,16 @@ def index_login (request):
         context={}
     return render (request,'project_allocation/index_login.html', context)
 
+# ###########################################################################################
+# ###########################################################################################
+
 def logout_ (request):
     logout(request)
     response = redirect('/project_allocation/')
     return response
+
+# ###########################################################################################
+# ###########################################################################################
 
 def choose (request):
     if request.user.is_authenticated:
@@ -36,6 +45,9 @@ def choose (request):
             return response
     response= redirect('/project_allocation/')
     return response
+
+# ###########################################################################################
+# ###########################################################################################
 
 def instructor_index(request):
     courses = Course.objects.all()
@@ -60,6 +72,8 @@ def instructor_index(request):
 
     return render(request, 'project_allocation/instructor_index.html',context)
 
+# ###########################################################################################
+# ###########################################################################################
 
 def instructor_course(request, course_id):
 
@@ -89,6 +103,8 @@ def instructor_course(request, course_id):
 
     return render(request, 'project_allocation/instructor_course.html',context)
 
+# ###########################################################################################
+# ###########################################################################################
 
 def student_index (request):
     user = request.user
@@ -103,50 +119,57 @@ def student_index (request):
             return render(request , 'project_allocation/student_index.html', context)
     response = redirect('/project_allocation/logout/')
     return response
-    
+
+# ###########################################################################################
+# ###########################################################################################    
 
 def student_course (request, course_id):
     '''
     When a student clicks any of his enrolled courses, he should see the list of all the projects attached to that course_id
-
     '''
-    course = Course.objects.get(pk=course_id)
+    user = request.user
+    if user.is_authenticated:
+        if Student.objects.filter(student_email = request.user.email).exists():
+            s = Student.objects.get(student_email = request.user.email)
+            course = Course.objects.get(pk=course_id)
+            ct=0
+            if (request.method=="POST"):
+                form = AddProjectPref(course_id,request.POST)
+                if form.is_valid():
+                    try:
+                        Projects_pref.objects.get( student_roll_num = Student.objects.get(student_roll_num=s.student_roll_num), 
+                            # course_id=course_id,student_roll_num = form.cleaned_data['student_roll_num'], 
+                            project_id = form.cleaned_data['project_id'],)
+                    except Projects_pref.DoesNotExist:
+                        p = course.course_id_pref.create(student_roll_num = Student.objects.get(student_roll_num=s.student_roll_num), 
+                                project_id = form.cleaned_data['project_id'], )
+                        p.save()
+                        return HttpResponseRedirect('/project_allocation/student/'+str(course_id))
+                        # raise ValidationError('Exists Already!')
+                    
+                    
+            else:
+                form = AddProjectPref(course_id)
+                
+            projects = Project.objects.filter(course_id=course_id)
+            
+            taken_projs = Project.objects.filter(project_id_pref__course_id=course_id)
+            num_projects = taken_projs.count()
+            if (num_projects>0):
+                ct=1
+            context={
+                'course' : course,
+                'projects' : projects,
+                'num' : int(num_projects),
+                'ct' : ct,
+                'form' : form,
+                'taken' : taken_projs,
+                'student' : s,
+            }
+            return render(request, 'project_allocation/student_course.html', context)
 
-    ct=0
-    if (request.method=="POST"):
-        form = AddProjectPref(course_id,request.POST)
-        if form.is_valid():
-            try:
-                Projects_pref.objects.get( student_roll_num = Student.objects.get(student_roll_num=19110127), 
-                    # course_id=course_id,student_roll_num = form.cleaned_data['student_roll_num'], 
-                    project_id = form.cleaned_data['project_id'],)
-            except Projects_pref.DoesNotExist:
-                p = course.course_id_pref.create(student_roll_num = Student.objects.get(student_roll_num=19110127), 
-                        project_id = form.cleaned_data['project_id'], )
-                p.save()
-                return HttpResponseRedirect('/project_allocation/student/'+str(course_id))
-                # raise ValidationError('Exists Already!')
-            
-            
-    else:
-        form = AddProjectPref(course_id)
-        
-    projects = Project.objects.filter(course_id=course_id)
-    
-    taken_projs = Project.objects.filter(project_id_pref__course_id=course_id)
-    num_projects = taken_projs.count()
-    if (num_projects>0):
-        ct=1
-    context={
-        'course' : course,
-        'projects' : projects,
-        'num' : int(num_projects),
-        'ct' : ct,
-        'form' : form,
-        'taken' : taken_projs,
-        'student_id' : 19110127,
-    }
-    return render(request, 'project_allocation/student_course.html', context)
+# ###########################################################################################
+# ###########################################################################################
 
 def student_course_partner (request, course_id):
     user = request.user
@@ -156,7 +179,7 @@ def student_course_partner (request, course_id):
             students = Student_Enrollment.objects.filter(course_id=course_id)
             course = Course.objects.get(pk=course_id)
             if (request.method=="POST"):
-                form_f = AddFriends(course_id,request.POST)
+                form_f = AddFriends(s.student_roll_num, course_id,request.POST)
                 if form_f.is_valid():
                     try:
                         Peer_edges.objects.get(course_id=course_id, student_roll_num = s.student_roll_num, 
@@ -167,7 +190,7 @@ def student_course_partner (request, course_id):
                         data_f.save()
                         return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
                 # =============================================
-                form_e = AddEnemies(course_id,request.POST)
+                form_e = AddEnemies(s.student_roll_num, course_id,request.POST)
                 if form_e.is_valid():
                     try:
                         Peer_edges.objects.get(course_id=course_id, student_roll_num = s.student_roll_num, 
@@ -178,8 +201,8 @@ def student_course_partner (request, course_id):
                         return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
             
             else:
-                form_f = AddFriends(course_id)
-                form_e = AddEnemies(course_id)
+                form_f = AddFriends(s.student_roll_num, course_id)
+                form_e = AddEnemies(s.student_roll_num, course_id)
             context={
                 'user' : user,
                 's' : s,

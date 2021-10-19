@@ -5,14 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+        * {
+            font-family: 'Lato';
+        }
+        body {
+            background-color: #f2f2f2;
+            padding-left: 20px;
+        }
+        h2 {
+            padding-bottom: 10px;
+        }
+        .head{
+            font-size: 1.4em;
+        }
+        .footer{
+            margin-top: 3vw;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
     {% load socialaccount %}
     {% if user.is_authenticated %}
-        <p> Welcome, you are logged in as {{name}}</p>
-        <button><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
+    <button style="margin-bottom: 1vw;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
+        <div style="margin-bottom: 1vw;"> <h2>Welcome, you are logged in as <b>{{name}}</b></h2></div>
+        <div class= "head" style="margin-left: auto ; margin-right: auto; border: black; width: 20vw;"> Lost? No worries! <a href = "{% url 'project_allocation:choose' %}" style="text-decoration: none;">Click Here!</a> </div>
     {%else %}
-        <a href = "{% provider_login_url 'google' %}?next={% url 'project_allocation:choose' %}">Login With Google!</a>
+        <div><a href = "{% provider_login_url 'google' %}?next={% url 'project_allocation:choose' %}">Login With Google!</a></div>
     {%endif%}
 </body>
 </html>

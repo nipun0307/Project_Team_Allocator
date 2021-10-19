@@ -37,10 +37,11 @@
 </head>
 <body>
     {% load template_filters %}
+    <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
     <br>
     <div class="head">
-        <span style="float : left"> Nipun Mahajan</span>
-        <span style="float: right; margin-right: 2vw;">19110127</span>
+        <span style="float : left"> {{student.student_name}}</span>
+        <span style="float: right; margin-right: 2vw;">{{student.student_roll_num}}</span>
     </div>
     <br>
     <br>
@@ -73,7 +74,7 @@
         &nbsp;
         <form action="" method=POST>
             {% csrf_token %}
-            <span>Enrollment Number:    </span>&nbsp;<b>{{student_id}}</b><br>
+            <span>Enrollment Number:    </span>&nbsp;<b>{{student.student_roll_num}}</b><br>
             {{ form.as_p }}
             <input type="submit" value=" + Add project">
         </form>
@@ -84,7 +85,8 @@
     </div>
 
        
-    <button style="margin-top: 1vw; margin-bottom: 2vw; font-size: 1.2em;"><a target="_self" href="{% url 'project_allocation:student_course_partner' course.id %} " style="text-decoration: none;">Next</a></button>
+    <button style="float: right;margin-top: 1vw; margin-bottom: 2vw; font-size: 1.2em;"><a target="_self" href="{% url 'project_allocation:student_course_partner' course.id %} " style="text-decoration: none;">Next >></a></button>
+    <button style=" margin-top: 1vw; margin-bottom: 2vw; font-size: 1.2em;"><a target="_self" href="{% url 'project_allocation:student_index' %} " style="text-decoration: none;">Back << </a></button>
 
 
     

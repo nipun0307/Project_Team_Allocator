@@ -22,7 +22,7 @@ class Student(models.Model):
     student_name = models.CharField(max_length=40)
 
     def __str__(self):
-        return str(self.student_roll_num)
+        return str(self.student_roll_num) + " -> " + str(self.student_name)
 
 
 # Class - 3
