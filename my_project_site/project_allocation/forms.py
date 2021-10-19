@@ -59,13 +59,13 @@ class AddFriends (ModelForm):
         students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
         # students= students.student_roll_enrolled.all()
         
-        self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
+        # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
-        self.fields['status']= forms.ChoiceField(choices=peer_choice_friend)
+        # self.fields['status']= forms.ChoiceField(choices=peer_choice_friend)
     
     class Meta():
         model = Peer_edges
-        fields = ('student_roll_num', 'peer_roll_num', 'status')
+        fields = ('peer_roll_num',)
         # student_roll_num_choices = forms.MultipleChoiceField(queryset=Student_Enrollment.objects.filter(course_id=1))
         
 
@@ -75,11 +75,11 @@ class AddEnemies (ModelForm):
         students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
         # students= students.student_roll_enrolled.all()
         
-        self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
+        # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
-        self.fields['status']= forms.ChoiceField(choices=peer_choice_enemy)
+        # self.fields['status']= forms.ChoiceField(choices=peer_choice_enemy)
 
     class Meta():
         model = Peer_edges
-        fields = ('student_roll_num', 'peer_roll_num', 'status')
+        fields = ('peer_roll_num', )
      

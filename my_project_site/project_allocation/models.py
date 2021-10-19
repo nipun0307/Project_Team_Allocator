@@ -12,7 +12,7 @@ class Instructor(models.Model):
     instructor_name = models.CharField(max_length=40)
     intructor_email = models.EmailField(max_length=40, unique=True)
     def __str__(self):
-        return str(self.id)
+        return str(self.instructor_name)
     
 
 # Class - 2

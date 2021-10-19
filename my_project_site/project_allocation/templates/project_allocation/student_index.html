@@ -26,9 +26,10 @@
 <body>
     {% load template_filters %}
     <br>
+    <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
     <div class="head">
-        <span style="float : left"> Nipun Mahajan</span>
-        <span style="float: right; margin-right: 2vw;">19110127</span>
+        <span style="float : left"> {{user.student_name}}</span>
+        <span style="float: right; margin-right: 2vw;">{{user.student_roll_num}}</span>
     </div>
     <br>
     <br>

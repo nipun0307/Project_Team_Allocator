@@ -13,7 +13,7 @@ urlpatterns = [
     # path ('', TemplateView.as_view (template_name="index_login.html")),
     path ('', views.index_login, name='index_login'),
     path ('logout/', views.logout_, name='my_logout'),
-
+    path ('choose/', views.choose , name='choose'),
 
     path('instructor/', views.instructor_index, name='instructor_index'),
     path('instructor/<int:course_id>', views.instructor_course, name='instructor_course'),

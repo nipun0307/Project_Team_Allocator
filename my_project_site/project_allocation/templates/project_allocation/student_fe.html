@@ -30,6 +30,8 @@
 <body>
     {% load template_filters %}
     <br>
+    <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
+
     <div class="head">
         <span style="float : left"> Nipun Mahajan</span>
         <span style="float: right; margin-right: 2vw;">19110127</span>
@@ -45,6 +47,7 @@
     <fieldset style="width: 90%; margin:auto;">
         <legend class="footer">Enter Friends</legend>
         &nbsp;
+        <div>You Roll Number: <span>{{s.student_roll_num}}</span></div>
         <form action="" method=POST>
             {% csrf_token %}
             {{ form_f.as_p }}
@@ -56,6 +59,7 @@
     <fieldset style="width: 90%;margin:auto;">
         <legend class="footer">Enter Enemies</legend>
         &nbsp;
+        <div>You Roll Number: <span>{{s.student_roll_num}}</span></div>
         <form action="" method=POST_ENEMIES>
             {% csrf_token %}
             {{ form_e.as_p }}
@@ -64,6 +68,5 @@
     </fieldset>
 
     <button style="float:right ; margin-right: 4vw; margin-top: 2vw; margin-bottom: 2vw; font-size: 1.2em;"> <a href="{% url 'project_allocation:student_course' course.id %}" style="text-decoration: none;"><b>Done!</b></a></button>
-
 </body>
 </html>
