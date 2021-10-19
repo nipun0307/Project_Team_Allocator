@@ -17,8 +17,16 @@ def index(request):
 def index_login (request):
     if request.user.is_authenticated:
         user = User.objects.get(id=request.user.id)
-        student = Student.objects.get(student_email = user.email)
-        name = student.student_name
+        if Student.objects.filter(student_email = request.user.email).exists():
+            p = Student.objects.get(student_email = user.email)
+            name = p.student_name
+        elif Instructor.objects.filter(intructor_email = request.user.email).exists():
+            p = Instructor.objects.get(intructor_email = user.email)
+            name = p.student_name
+        else:
+            logout(request)
+            response = redirect('/project_allocation/')
+            return response
         context={'name':name}
     else:
         context={}
@@ -185,10 +193,11 @@ def student_course_partner (request, course_id):
                         Peer_edges.objects.get(course_id=course_id, student_roll_num = s.student_roll_num, 
                                 peer_roll_num = form_f.cleaned_data['peer_roll_num'],)
                     except Peer_edges.DoesNotExist:
-                        data_f = course.course_id_peer.create(peer_roll_num = form_f.cleaned_data['peer_roll_num'], status='F')
+                        data_f = course.course_id_peer.create(course_id=course, student_roll_num = s, peer_roll_num = form_f.cleaned_data['peer_roll_num'], status='F')
                         # data_f.status= 'F'
                         data_f.save()
                         return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
+
                 # =============================================
                 form_e = AddEnemies(s.student_roll_num, course_id,request.POST)
                 if form_e.is_valid():
@@ -196,7 +205,7 @@ def student_course_partner (request, course_id):
                         Peer_edges.objects.get(course_id=course_id, student_roll_num = s.student_roll_num, 
                                 peer_roll_num = form_e.cleaned_data['peer_roll_num'],)
                     except Peer_edges.DoesNotExist:
-                        data_e = course.course_id_peer.create(peer_roll_num = form_e.cleaned_data['peer_roll_num'], status='E')
+                        data_e = course.course_id_peer.create(course_id=course, student_roll_num = s, peer_roll_num = form_e.cleaned_data['peer_roll_num'], status='E')
                         data_e.save()
                         return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
             
