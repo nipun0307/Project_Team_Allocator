@@ -172,7 +172,7 @@ def student_course (request, course_id):
                 
             projects = Project.objects.filter(course_id=course_id)
             
-            taken_projs = Project.objects.filter(project_id_pref__course_id=course_id)
+            taken_projs = Project.objects.filter(project_id_pref__student_roll_num=s)
             num_projects = taken_projs.count()
             if (num_projects>0):
                 ct=1
