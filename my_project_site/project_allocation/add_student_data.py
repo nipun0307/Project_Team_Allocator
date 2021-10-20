@@ -1,9 +1,10 @@
 
-from project_allocation.models import Student
 import pandas as pd
-df = pd.read_csv("data_csv/student.csv")
-s = Student(student_roll_num = 19110127, student_name = "Nipun Mahajan", student_email = "mahajan.n@iitgn.ac.in")
+# df = pd.read_csv("data_csv/student.csv")
+# s = Student(student_roll_num = 19110127, student_name = "Nipun Mahajan", student_email = "mahajan.n@iitgn.ac.in")
 # print(df.head)
+
+from .models import Student
 
 '''
 from project_allocation.models import Instructor , Course
