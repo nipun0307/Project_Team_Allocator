@@ -22,7 +22,7 @@ def index_login (request):
             name = p.student_name
         elif Instructor.objects.filter(intructor_email = request.user.email).exists():
             p = Instructor.objects.get(intructor_email = user.email)
-            name = p.student_name
+            name = p.instructor_name
         else:
             logout(request)
             response = redirect('/project_allocation/')
@@ -61,7 +61,8 @@ def instructor_index(request):
     user = request.user
     if user.is_authenticated:
         if Instructor.objects.filter(intructor_email = request.user.email).exists():
-            courses = Course.objects.all()
+            instructor = Instructor.objects.get(intructor_email = request.user.email)
+            courses = Course.objects.filter(instructor_id = instructor)
 
             enrollments = {}
             projects = {}
@@ -79,6 +80,7 @@ def instructor_index(request):
                 'enrollments': enrollments,
                 'projects': projects,
                 'pub': pub,
+                'user' : instructor,
             }
 
             return render(request, 'project_allocation/instructor_index.html',context)

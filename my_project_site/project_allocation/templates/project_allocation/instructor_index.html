@@ -6,32 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Allocation | Instructor | Main Page </title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+         @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
         * {
             font-family: 'Lato';
         }
         body {
             background-color: #f2f2f2;
+            padding-left: 20px;
+        }
+        h2 {
+            padding-bottom: 10px;
+        }
+        .head{
+            font-size: 2em;
+        }
+        .head2{
+            font-size: 0.7em;
         }
     </style>
 </head>
 <body>
     {% load template_filters %}
+    <!-- <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button> -->
+    <br>
     <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
-
+    <div class="head">
+        <span style="float : left"> Hi {{user.instructor_name}}! Welcome Back :)</span>
+    </div>
+    <br>
+    {% if courses.count %}
+    <br>
+    <hr>
+    <h1>List of Courses Offered</h1>
     <button type="success" style = "margin-left: 50px; margin-top: 40px;">Add project list for new course</button>
-
-    {% for course in courses %}
-        <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
-            <legend style="margin-bottom: -10px;"><h1><a href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
-        </fieldset>
-    {% endfor %}
+        {% for course in courses %}
+            <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
+                <legend style="margin-bottom: -10px;"><h1><a href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
+            </fieldset>
+        {% endfor %}
+    {%else%}
+    <br><hr><br>
+            <div class="head"> No courses offered this semester :(<div class="head2">Please contact administrator if you this is a mistake!</div> </div>
+    {%endif%}
     
 </body>
 </html>
