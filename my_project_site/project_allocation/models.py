@@ -10,7 +10,7 @@ peer_choices = (
 # Class - 1
 class Instructor(models.Model):
     instructor_name = models.CharField(max_length=40)
-    intructor_email = models.EmailField(max_length=40, unique=True)
+    instructor_email = models.EmailField(max_length=40, unique=True)
     def __str__(self):
         return str(self.instructor_name)
     
@@ -30,7 +30,6 @@ class Course(models.Model):
     course_name = models.CharField(max_length=100)
     course_code = models.SlugField(max_length=30, default="course-code-not-applicable")
     instructor_id =  models.ForeignKey(Instructor, on_delete=models.CASCADE)
-    is_pub = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.course_code)
@@ -85,4 +84,9 @@ class Projects_pref (models.Model):
     def __str__ (self):
         return str(self.course_id) + "\t:\t" + str(self.student_roll_num) + "\t:\t" + str(self.project_id)
 
-
+# Class - 8
+class is_pub (models.Model):
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_pref')
+    published = models.BooleanField (default=False)
+    def __str__(self):
+        return str(self.course_id) + " -> " + str(self.published)
