@@ -86,7 +86,7 @@ class Projects_pref (models.Model):
 
 # Class - 8
 class is_pub (models.Model):
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_pref')
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_pub')
     published = models.BooleanField (default=False)
     def __str__(self):
         return str(self.course_id) + " -> " + str(self.published)
