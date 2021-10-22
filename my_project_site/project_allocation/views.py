@@ -197,7 +197,7 @@ def student_course_partner (request, course_id):
             s = Student.objects.get(student_email = user.email)
             students = Student_Enrollment.objects.filter(course_id=course_id)
             course = Course.objects.get(pk=course_id)
-            if (request.method=="POST"):
+            if (request.method=="POST") and "friend" in request.POST:
                 form_f = AddFriends(s.student_roll_num, course_id,request.POST)
                 if form_f.is_valid():
                     try:
@@ -210,6 +210,7 @@ def student_course_partner (request, course_id):
                         return HttpResponseRedirect ('/project_allocation/student/'+str(course_id)+'/partner')
 
                 # =============================================
+            if (request.method=="POST") and "enemy" in request.POST:
                 form_e = AddEnemies(s.student_roll_num, course_id,request.POST)
                 if form_e.is_valid():
                     try:
@@ -223,6 +224,8 @@ def student_course_partner (request, course_id):
             else:
                 form_f = AddFriends(s.student_roll_num, course_id)
                 form_e = AddEnemies(s.student_roll_num, course_id)
+                friends = Student.objects.filter(peer_id_peer__student_roll_num=s.student_roll_num, peer_id_peer__course_id=course_id, peer_id_peer__status='F')
+                enemies = Student.objects.filter(peer_id_peer__student_roll_num=s.student_roll_num, peer_id_peer__course_id=course_id, peer_id_peer__status='E')
             context={
                 'user' : user,
                 's' : s,
@@ -230,6 +233,8 @@ def student_course_partner (request, course_id):
                 'students' : students,
                 'form_f' : form_f,
                 'form_e' : form_e,
+                'friends' : friends,
+                'enemies' : enemies,
             }
             return render(request, 'project_allocation/student_fe.html',context)
     response = redirect('/project_allocation/logout/')
