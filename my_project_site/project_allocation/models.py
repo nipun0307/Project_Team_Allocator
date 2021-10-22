@@ -51,9 +51,12 @@ class Project(models.Model):
 class Student_Enrollment(models.Model):
     student_roll_num = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_roll_enrolled')
     course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_enrolled')
-
+    class Meta:
+        constraints = [
+        models.UniqueConstraint(fields=['student_roll_num','course_id'], name='unique_enrollments')
+        ]
     def __str__(self):
-        return str(self.student_roll_num)
+        return str(self.student_roll_num) +" : " + str(self.course_id)
 
 # Class - 5
 class Peer_edges (models.Model):

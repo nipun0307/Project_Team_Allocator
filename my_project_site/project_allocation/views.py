@@ -20,8 +20,8 @@ def index_login (request):
         if Student.objects.filter(student_email = request.user.email).exists():
             p = Student.objects.get(student_email = user.email)
             name = p.student_name
-        elif Instructor.objects.filter(intructor_email = request.user.email).exists():
-            p = Instructor.objects.get(intructor_email = user.email)
+        elif Instructor.objects.filter(instructor_email = request.user.email).exists():
+            p = Instructor.objects.get(instructor_email = user.email)
             name = p.instructor_name
         else:
             logout(request)
@@ -48,7 +48,7 @@ def choose (request):
         if Student.objects.filter(student_email = request.user.email).exists():
             response= redirect('/project_allocation/student/')
             return response
-        elif Instructor.objects.filter(intructor_email = request.user.email).exists():
+        elif Instructor.objects.filter(instructor_email = request.user.email).exists():
             response= redirect('/project_allocation/instructor/')
             return response
     response= redirect('/project_allocation/')
@@ -60,8 +60,8 @@ def choose (request):
 def instructor_index(request):
     user = request.user
     if user.is_authenticated:
-        if Instructor.objects.filter(intructor_email = request.user.email).exists():
-            instructor = Instructor.objects.get(intructor_email = request.user.email)
+        if Instructor.objects.filter(instructor_email = request.user.email).exists():
+            instructor = Instructor.objects.get(instructor_email = request.user.email)
             courses = Course.objects.filter(instructor_id = instructor)
 
             enrollments = {}
@@ -93,7 +93,7 @@ def instructor_index(request):
 def instructor_course(request, course_id):
     user = request.user
     if user.is_authenticated:
-        if Instructor.objects.filter(intructor_email = request.user.email).exists():
+        if Instructor.objects.filter(instructor_email = request.user.email).exists():
             course = Course.objects.get(pk=course_id)
 
             added = False

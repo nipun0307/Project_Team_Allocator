@@ -34,15 +34,18 @@
     <br>
     <br>
     <hr>
-    <h1>List of Enrolled Courses</h1>
-    {% for course in courses %}
-    <ul>
-       <li>
-        <h2> <a href="{% url 'project_allocation:student_course' course.id %}" target=_blank>{{course.course_code}}</a></h2>
-       </li> 
-    </ul>
-    {% endfor %}
-
+    {% if courses.count %}
+        <h1>List of Enrolled Courses</h1>
+        {% for course in courses %}
+        <ul>
+        <li>
+            <h2> <a href="{% url 'project_allocation:student_course' course.id %}" target=_blank>{{course.course_code}}</a></h2>
+        </li> 
+        </ul>
+        {% endfor %}
+    {% else %}
+        <h2>Please enroll for your favourite courses before continuing! Contact Administrator</h2>
+    {%endif%}
 
 </body>
 </html>
