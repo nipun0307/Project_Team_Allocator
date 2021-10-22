@@ -58,6 +58,8 @@ def choose (request):
 # ###########################################################################################
 
 def instructor_index(request):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
     user = request.user
     if user.is_authenticated:
         if Instructor.objects.filter(instructor_email = request.user.email).exists():
@@ -91,6 +93,8 @@ def instructor_index(request):
 # ###########################################################################################
 
 def instructor_course(request, course_id):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
     user = request.user
     if user.is_authenticated:
         if Instructor.objects.filter(instructor_email = request.user.email).exists():
@@ -126,6 +130,8 @@ def instructor_course(request, course_id):
 # ###########################################################################################
 
 def student_index (request):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
     user = request.user
     if user.is_authenticated:
         if Student.objects.filter(student_email = request.user.email).exists():
@@ -146,6 +152,8 @@ def student_course (request, course_id):
     '''
     When a student clicks any of his enrolled courses, he should see the list of all the projects attached to that course_id
     '''
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
     user = request.user
     if user.is_authenticated:
         if Student.objects.filter(student_email = request.user.email).exists():
