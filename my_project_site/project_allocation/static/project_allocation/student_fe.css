@@ -162,4 +162,10 @@ ul{
     padding: 5pt;
     border-radius: 9pt;
     cursor: pointer;
+    background-color: #f2f2f2;
+}
+.list{
+    font-size: 18pt;
+    color: #39323a;
+    margin: 2vw;
 }

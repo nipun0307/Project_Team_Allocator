@@ -75,15 +75,17 @@ ul{
 }
 .item{
     color: #39323a;
+    font-size: 14pt;
 }
 .footer{
     padding:0.5vw;
     margin-top: 2vw;
-    margin-bottom: 1vw;
+    margin-bottom: 2vw;
     margin-left: 2vw;
     color: #f2f2f2;
     width: fit-content;
     background-color: #444a97;
+    font-size: 14pt;
 }
 
 .next_b{
@@ -135,6 +137,7 @@ ul>.register{
 }
 
 #project_button{
+    cursor: pointer;
     color: #f2f2f2;
     text-decoration: none;
     background-color: #858df1;
@@ -143,4 +146,7 @@ ul>.register{
     padding : 0.5vw;
     padding-right: 0.7vw;
     border-radius: 12pt;
+}
+.form{
+    font-size: 16pt;
 }

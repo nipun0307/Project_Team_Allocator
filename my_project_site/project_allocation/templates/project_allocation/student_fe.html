@@ -50,7 +50,7 @@
             <form action="" method=POST>
                 {% csrf_token %}
                 {{ form_e.as_p }}
-                <button id="form_button" type="submit" name="friend">+ Add Enemy</button>
+                <button id="form_button" type="submit" name="enemy">+ Add Enemy</button>
             </form>
         </div>
     </div>
@@ -78,7 +78,7 @@
                 {%endfor%}
             </ul>
         {%else%}
-            <div class="list">&nbsp;&nbsp;&nbsp;&nbsp;-seems like you are fine with everyone!</div>
+            <div class="list">&nbsp;&nbsp;&nbsp;&nbsp;Seems like you are fine with everyone!</div>
         {%endif%}
     </div>
     <br>

@@ -45,6 +45,7 @@ class AddProjectPref (ModelForm):
         projects=Project.objects.filter(course_id=course_id).distinct().exclude(project_id_pref__student_roll_num = roll_num)
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['project_id']=forms.ModelChoiceField(queryset=projects)
+        self.fields['project_id'].label="Project Name\t\t"
     class Meta():
         model = Projects_pref
         fields=('project_id',)

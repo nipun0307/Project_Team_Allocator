@@ -42,7 +42,7 @@
         <div class="section">List of <b>All</b> Projects for {{course.course_code}}</div>
         <ul>
             {% for project in projects %}
-            <fieldset>
+            <fieldset >
                 <legend style="margin-bottom: 10px; font-size: 1.5em;"><b>{{project.project_name}}</b></legend>
                
                 <div class="item" style="margin-bottom: 1vw;">{{project.project_description}}</div>
@@ -53,7 +53,7 @@
 
         <div class="section">Register for New Project:</div>
         <br>
-        <fieldset>
+        <fieldset class="form">
             <br>
             <form action="" method=POST>
                 {% csrf_token %}
