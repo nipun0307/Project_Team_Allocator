@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+*{
+    font-family: 'Lato' , sans-serif;
+   
+}
+h2 {
+    margin-left: 1vw;
+    padding-bottom: 10px;
+    font-size: 1.8vw;
+    color: #39323a;
+}
+
+.head{
+    color: #39323a;
+    font-size: 24pt;
+    margin-bottom: 1vw;
+}
+
+.header{
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    font-weight: 900;
+    font-size: 2vw;
+    background-color: #858df1;
+    color: #f2f2f2;
+}
+
+.heading {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    color: #f2f2f2;
+}
+
+body {
+    background-color: #f2f2f2;
+    margin:0vw;
+}
+.log_icon{
+    width: fit-content;
+    float: left;
+    color: #f2f2f2;
+}
+.log_icon #logout{
+    color: #f2f2f2;
+    margin-left: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    padding-right: 0.5vw;
+
+}
+
+#logout:hover{
+    background-color: #f2f2f2;
+    color: #858df1;
+    border-radius: 00.5vw;
+    transition: background-color 0.3s;
+}
+
+.section {
+    padding-left: 2vw;
+    padding-top: 0.7vw;
+    padding-bottom: 0.7vw;
+    background-color: #858df1;
+    color: #f2f2f2;
+}
+
+.section{
+    font-size: 24pt;
+}
+
+ul{
+    color: #444a97;
+    padding-left: 0;
+}
+.item{
+    color: #39323a;
+}
+.footer{
+    padding:0.5vw;
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+    margin-left: 2vw;
+    color: #f2f2f2;
+    width: fit-content;
+    background-color: #444a97;
+}
+
+.next_b{
+    width:fit-content;
+    color: #f2f2f2 !important;
+    background-color: #444a97;
+    padding : 0.4vw 0.7vw 0.4vw 0.7vw;
+    font-size: 3.2vw;
+    border-radius: 1vw;
+    margin-bottom: 1vw;
+    text-decoration: none;
+    margin-right: 2vw;
+    float: right;
+}
+.back_b{
+    width:fit-content;
+    color: #f2f2f2 !important;
+    background-color: #444a97;
+    padding : 0.4vw 0.7vw 0.4vw 0.7vw;
+    font-size: 3.2vw;
+    border-radius: 1vw;
+    margin-bottom: 1vw;
+    text-decoration: none;
+    float: left;
+    margin-left: 2vw;
+}
+.back_b>#back , .next_b>#next{
+    color: #f2f2f2;
+}
+fieldset{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2vw;
+}
+.lst{
+    font-size: 20pt;
+    color: #39323a;
+    padding-left: 0.2vw;
+    margin-bottom: 0.7vw;
+
+}
+ol{
+    margin-left: 2vw;
+}
+ul>.register{
+    list-style-type: "*";
+   
+}
+
+#project_button{
+    color: #f2f2f2;
+    text-decoration: none;
+    background-color: #858df1;
+    border: none;
+    font-size: 12pt;
+    padding : 0.5vw;
+    padding-right: 0.7vw;
+    border-radius: 12pt;
+}

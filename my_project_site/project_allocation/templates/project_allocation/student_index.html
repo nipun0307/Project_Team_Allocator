@@ -6,46 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student | Courses</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-        * {
-            font-family: 'Lato';
-        }
-        body {
-            background-color: #f2f2f2;
-            padding-left: 20px;
-        }
-        h2 {
-            padding-bottom: 10px;
-        }
-        .head{
-            font-size: 2em;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/student_index.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
     {% load template_filters %}
     <br>
-    <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
+    <!-- <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button> -->
     <div class="head">
-        <span style="float : left"> {{user.student_name}}</span>
-        <span style="float: right; margin-right: 2vw;">{{user.student_roll_num}}</span>
+        <span style="float : left; margin-left: 2vw;"> {{student.student_name}}</span>
+        <span style="float: right; margin-right: 2vw;">{{student.student_roll_num}}</span>
     </div>
     <br>
     <br>
     <hr>
-    {% if courses.count %}
-        <h1>List of Enrolled Courses</h1>
-        {% for course in courses %}
-        <ul>
-        <li>
-            <h2> <a href="{% url 'project_allocation:student_course' course.id %}" target=_blank>{{course.course_code}}</a></h2>
-        </li> 
-        </ul>
-        {% endfor %}
-    {% else %}
-        <h2>Please enroll for your favourite courses before continuing! Contact Administrator</h2>
-    {%endif%}
+    <div class="course_list">
+        <div class="head">List of Enrolled Courses</div>
+        {% if courses.count %}
+            {% for course in courses %}
+            <ul>
+            <li>
+                <div class="head_list"> 
+                    <a class="ptr" href="{% url 'project_allocation:student_course' course.id %}" target="_self">
+                        <span class="c_code">{{course.course_code}}</span>
+                        <span class="c_name">{{course.course_name}}</span>
+                    </a>
+                </div>
+            </li> 
+            </ul>
+            {% endfor %}
+        {% else %}
+            <h2>Please enroll for your favourite courses before continuing! Contact Administrator</h2>
+        {%endif%}
+    </div>
 
 </body>
 </html>

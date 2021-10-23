@@ -5,46 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student | {{course.course_code}} | Partners</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-        * {
-            font-family: 'Lato';
-        }
-        body {
-            background-color: #f2f2f2;
-            padding-left: 20px;
-        }
-        h2 {
-            padding-bottom: 10px;
-        }
-        .head{
-            margin-left: 2vw;
-            font-size: 2em;
-        }
-        .footer{
-            margin-top: 3vw;
-            font-size: 1.2em;
-        }
-        .list{
-            margin-top: 0.5vw;
-            font-size: 0.7em;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/student_fe.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     {% load template_filters %}
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
+    {% load template_filters %}
     <br>
-    <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
-
+    <!-- <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button> -->
     <div class="head">
-        <span style="float : left"> {{s.student_name}}</span>
+        <span style="float : left; margin-left: 2vw;"> {{s.student_name}}</span>
         <span style="float: right; margin-right: 2vw;">{{s.student_roll_num}}</span>
     </div>
     <br>
-
-    <br>
-    <hr>
-    <div class="head" style="margin-top: 2vw; margin-bottom: 2vw;">
+    <div class="section" style="margin-top: 2vw; margin-bottom: 2vw;">
         Enter {{course.course_code}} Project Partner Preferences
     </div>
 
@@ -71,11 +53,10 @@
         </form>
     </fieldset>
     <br>
-    <hr><br>
-    <div class="head">
-        <div>List Of Added Friends</div>
+    <div >
+        <div class="section">List Of Added Friends</div>
         {%if friends.count%}
-            <ul class="list">
+            <ul class="lst">
                 {% for friend in friends %}
                     <li>{{friend.student_name}}</li>
                 {%endfor%}
@@ -86,10 +67,10 @@
     </div>
 
     <br>
-    <div class="head">
-        <div >List Of Added Enemies</div>
+    <div>
+        <div class="section">List Of Added Enemies</div>
         {% if enemies.count %}
-            <ul class="list">
+            <ul class="lst">
                 {% for enemy in enemies %}
                     <li>{{enemy.student_name}}</li>
                 {%endfor%}

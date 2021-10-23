@@ -5,88 +5,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student | {{course.course_code}} | Projects</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-        * {
-            font-family: 'Lato';
-        }
-        body {
-            background-color: #f2f2f2;
-            padding-left: 20px;
-        }
-        h2 {
-            padding-bottom: 10px;
-        }
-        .head{
-            margin-left: 2vw;
-            font-size: 2em;
-        }
-        .footer{
-            margin-top: 3vw;
-            font-size: 1.2em;
-        }
-        ul{
-            margin-top: 1vw;
-            font-size: 1.5em;
-            list-style-type: disc;
-        }
-        .lst{
-            margin-top: 1vw;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/student_course.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
     {% load template_filters %}
-    <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
     <br>
+    <!-- <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button> -->
     <div class="head">
-        <span style="float : left"> {{student.student_name}}</span>
+        <span style="float : left; margin-left: 2vw;"> {{student.student_name}}</span>
         <span style="float: right; margin-right: 2vw;">{{student.student_roll_num}}</span>
     </div>
+
     <br>
-    <br>
-    <hr>
-    
-    <div class="head">List of <b>Registered</b> Projects for {{course.course_code}}</div>
-    <ul>
-        {% for project in taken %}
-            <li class="lst">{{project.project_name}}</li>
-        {%endfor%}
-    </ul>
-    <!-- ==================================================================================== -->
-    <br><br>
-    <div class="head">List of <b>All</b> Projects for {{course.course_code}}</div>
-    <ul>
-        {% for project in projects %}
-        <fieldset style= "margin-left: 1vw; margin-right: auto; width: 90%; margin-bottom: 10px;">
-            <legend style="margin-bottom: 10px; font-size: 1.5em;"><b>{{project.project_name}}</b></legend>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span>{{project.project_description}}</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span> Maximum Team Size: {{ project.team_size }} </span>
+
+    {%if projects.count%}
+        {%if taken.count %}
+        <br>
+        <div class="section">List of <b>Registered</b> Projects for {{course.course_code}}</div>
+        <ol class="register">
+            {% for project in taken %}
+                <li class="lst">{{project.project_name}}</li>
+            {%endfor%}
+        </ol>
+        {%endif%}
+        <!-- ==================================================================================== -->
+        <br>
+        <div class="section">List of <b>All</b> Projects for {{course.course_code}}</div>
+        <ul>
+            {% for project in projects %}
+            <fieldset>
+                <legend style="margin-bottom: 10px; font-size: 1.5em;"><b>{{project.project_name}}</b></legend>
+               
+                <div class="item" style="margin-bottom: 1vw;">{{project.project_description}}</div>
+                <div class="item"> Maximum Team Size: {{ project.team_size }} </div>
+            </fieldset>
+            {%endfor%}
+        </ul>
+
+        <div class="section">Register for New Project:</div>
+        <br>
+        <fieldset>
+            <br>
+            <form action="" method=POST>
+                {% csrf_token %}
+                <span>Enrollment Number:    </span>&nbsp;<b>{{student.student_roll_num}}</b><br>
+                {{ form.as_p }}
+                <input id="project_button" type="submit" value=" + Add project">
+            </form>
         </fieldset>
-        {%endfor%}
-    </ul>
+        
+        <div class="footer">
+            Total Projects : <span><b>{{num}}</b></span>
+        </div>
+        <div class="next_b"><a id="next" target="_self" href="{% url 'project_allocation:student_course_partner' course.id %} "><i class='bx bx-right-arrow-alt'></i></a></div>
+    {%else%}
+        <div class="head">Your instructor is yet to post fun projects. Hang on! </div>
 
-    <div class="head">Register for New Project:</div>
-    <fieldset>
-        <legend></legend>
-        &nbsp;
-        <form action="" method=POST>
-            {% csrf_token %}
-            <span>Enrollment Number:    </span>&nbsp;<b>{{student.student_roll_num}}</b><br>
-            {{ form.as_p }}
-            <input type="submit" value=" + Add project">
-        </form>
-    </fieldset>
-    
-    <div class="footer">
-        Total Projects : <span><b>{{num}}</b></span>
-    </div>
+    {%endif%}
 
-       
-    <button style="float: right;margin-top: 1vw; margin-bottom: 2vw; font-size: 1.2em;"><a target="_self" href="{% url 'project_allocation:student_course_partner' course.id %} " style="text-decoration: none;">Next >></a></button>
-    <button style=" margin-top: 1vw; margin-bottom: 2vw; font-size: 1.2em;"><a target="_self" href="{% url 'project_allocation:student_index' %} " style="text-decoration: none;">Back << </a></button>
+    <div class="back_b" ><a id="back" target="_self" href="{% url 'project_allocation:student_index' %} "><i class='bx bx-left-arrow-alt' ></i></a></div>
 
 
     

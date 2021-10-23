@@ -135,11 +135,12 @@ def student_index (request):
     user = request.user
     if user.is_authenticated:
         if Student.objects.filter(student_email = request.user.email).exists():
-            user = Student.objects.get(student_email = request.user.email)
-            dataset = Course.objects.filter(course_id_enrolled__student_roll_num=user.student_roll_num)
+            student = Student.objects.get(student_email = request.user.email)
+            dataset = Course.objects.filter(course_id_enrolled__student_roll_num=student.student_roll_num)
             context = {
                 'courses' : dataset,
                 'user' : user,
+                'student' : student,
             }
             return render(request , 'project_allocation/student_index.html', context)
     response = redirect('/project_allocation/logout/')
@@ -158,10 +159,11 @@ def student_course (request, course_id):
     if user.is_authenticated:
         if Student.objects.filter(student_email = request.user.email).exists():
             s = Student.objects.get(student_email = request.user.email)
+            roll_num = s.student_roll_num
             course = Course.objects.get(pk=course_id)
             ct=0
             if (request.method=="POST"):
-                form = AddProjectPref(course_id,request.POST)
+                form = AddProjectPref(roll_num, course_id,request.POST)
                 if form.is_valid():
                     try:
                         Projects_pref.objects.get( student_roll_num = Student.objects.get(student_roll_num=s.student_roll_num), 
@@ -176,7 +178,7 @@ def student_course (request, course_id):
                     
                     
             else:
-                form = AddProjectPref(course_id)
+                form = AddProjectPref(roll_num, course_id)
                 
             projects = Project.objects.filter(course_id=course_id)
             

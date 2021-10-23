@@ -39,10 +39,10 @@ class AddProjectToListForm(ModelForm):
 Creating a form for the student where he can select the project he wants to take
 '''
 class AddProjectPref (ModelForm):
-    def __init__ (self, course_id, *args, **kwargs):
+    def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddProjectPref, self).__init__(*args, **kwargs)
         students=Student.objects.filter(student_roll_enrolled__course_id=course_id).distinct()
-        projects=Project.objects.filter(course_id=course_id).distinct()
+        projects=Project.objects.filter(course_id=course_id).distinct().exclude(project_id_pref__student_roll_num = roll_num)
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['project_id']=forms.ModelChoiceField(queryset=projects)
     class Meta():
@@ -56,7 +56,7 @@ class AddProjectPref (ModelForm):
 class AddFriends (ModelForm):
     def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddFriends, self).__init__(*args, **kwargs)
-        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).exclude(student_roll_num = roll_num)
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id ).exclude(student_roll_num = roll_num).exclude(peer_id_peer__status="F").exclude(peer_id_peer__status="E")
         # students= students.student_roll_enrolled.all()
         
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
@@ -72,7 +72,7 @@ class AddFriends (ModelForm):
 class AddEnemies (ModelForm):
     def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddEnemies, self).__init__(*args, **kwargs)
-        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).exclude(student_roll_num = roll_num)
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).exclude(student_roll_num = roll_num).exclude(student_roll_num = roll_num).exclude(peer_id_peer__status="F").exclude(peer_id_peer__status="E")
         # students= students.student_roll_enrolled.all()
         
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
