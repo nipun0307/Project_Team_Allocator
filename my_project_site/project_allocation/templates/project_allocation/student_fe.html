@@ -15,6 +15,7 @@
     <div class="header"> 
         {% if user.is_authenticated %}
         <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        <div class="home_icon"><a id="home" href="{% url 'project_allocation:student_index' %}"><i class='bx bx-home-alt'></i></a></div>
         {%endif%}
         <div class="heading">Cluster Allotment</div>
     </div>
@@ -29,36 +30,38 @@
     <div class="section" style="margin-top: 2vw; margin-bottom: 2vw;">
         Enter {{course.course_code}} Project Partner Preferences
     </div>
+    <div class="form">
+        <div class="footer">Enter Friends</div>
+        <div class="fields">
+            <div>Enrollment Number: &nbsp;&nbsp;{{s.student_roll_num}}</div>
+            <form action="" method=POST>
+                {% csrf_token %}
+                {{ form_f.as_p }}
+                <button id="form_button" type="submit" name="friend">+ Add Friend</button>
+            </form>
+        </div>
+    </div>
 
-    <fieldset style="width: 90%; margin:auto;">
-        <legend class="footer">Enter Friends</legend>
-        &nbsp;
-        <div>You Roll Number: <span>{{s.student_roll_num}}</span></div>
-        <form action="" method=POST>
-            {% csrf_token %}
-            {{ form_f.as_p }}
-            <button type="submit" name="friend">+ Add Friend</button>
-        </form>
-    </fieldset>
     <br><br>
-
-    <fieldset style="width: 90%;margin:auto;">
-        <legend class="footer">Enter Enemies</legend>
-        &nbsp;
-        <div>You Roll Number: <span>{{s.student_roll_num}}</span></div>
-        <form action="" method=POST>
-            {% csrf_token %}
-            {{ form_e.as_p }}
-            <button type="submit" name="enemy">+ Add Enemy</button>
-        </form>
-    </fieldset>
+    <div class="form">
+        <div class="footer">Enter Enemies</div>
+        <div class="fields">
+            <div>Enrollment Number: &nbsp;&nbsp;{{s.student_roll_num}}</div>
+            <form action="" method=POST>
+                {% csrf_token %}
+                {{ form_e.as_p }}
+                <button id="form_button" type="submit" name="friend">+ Add Enemy</button>
+            </form>
+        </div>
+    </div>
+    <br>
     <br>
     <div >
         <div class="section">List Of Added Friends</div>
         {%if friends.count%}
             <ul class="lst">
                 {% for friend in friends %}
-                    <li>{{friend.student_name}}</li>
+                    <li class="item">{{friend.student_name}}</li>
                 {%endfor%}
             </ul>
         {%else%}
@@ -66,21 +69,22 @@
         {%endif%}
     </div>
 
-    <br>
     <div>
         <div class="section">List Of Added Enemies</div>
         {% if enemies.count %}
             <ul class="lst">
                 {% for enemy in enemies %}
-                    <li>{{enemy.student_name}}</li>
+                    <li class="item">{{enemy.student_name}}</li>
                 {%endfor%}
             </ul>
         {%else%}
             <div class="list">&nbsp;&nbsp;&nbsp;&nbsp;-seems like you are fine with everyone!</div>
         {%endif%}
     </div>
-    
-    <button style=" margin-top: 1vw; margin-bottom: 2vw; font-size: 1.2em;"><a target="_self" href="{% url 'project_allocation:student_index' %} " style="text-decoration: none;">Home <<<< </a></button>
-    <button style="float:right ; margin-right: 4vw; margin-top: 2vw; margin-bottom: 2vw; font-size: 1.2em;"> <a href="{% url 'project_allocation:student_course' course.id %}" style="text-decoration: none;"><b>Done!</b></a></button>
+    <br>
+    <div class="back_b" ><a id="back" target="_self" href="{% url 'project_allocation:student_course' course.id %} "><i class='bx bx-left-arrow-alt' ></i></a></div>
+    <!-- <button style="float:right ; margin-right: 4vw; margin-top: 2vw; margin-bottom: 2vw; font-size: 1.2em;"> <a href="{% url 'project_allocation:student_course' course.id %}" style="text-decoration: none;"><b>Done!</b></a></button> -->
+    <div class="done_b" ><a id="done" target="_self" href="{% url 'project_allocation:student_index'%}"><i class='bx bx-check' ></i></a></div>
+
 </body>
 </html>

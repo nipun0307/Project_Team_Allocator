@@ -61,6 +61,7 @@ class AddFriends (ModelForm):
         
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
+        self.fields['peer_roll_num'].label="Friend ID\t\t"
         # self.fields['status']= forms.ChoiceField(choices=peer_choice_friend)
     
     class Meta():
@@ -77,6 +78,7 @@ class AddEnemies (ModelForm):
         
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
+        self.fields['peer_roll_num'].label="Enemy ID\t\t"
         # self.fields['status']= forms.ChoiceField(choices=peer_choice_enemy)
 
     class Meta():
