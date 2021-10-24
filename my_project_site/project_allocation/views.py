@@ -249,3 +249,22 @@ def student_course_partner (request, course_id):
             return render(request, 'project_allocation/student_fe.html',context)
     response = redirect('/project_allocation/logout/')
     return response
+
+# ###########################################################################################
+# ###########################################################################################
+
+def student_course_partner_delete(request, course_id, peer_id):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
+    user = request.user
+    if user.is_authenticated:
+        if Student.objects.filter(student_email = request.user.email).exists():
+            student = Student.objects.get(student_email = request.user.email)
+            peer = Student.objects.get(student_roll_num = peer_id)
+            course = Course.objects.get(pk=course_id)
+            if Peer_edges.objects.filter(course_id=course , student_roll_num = student, peer_roll_num =peer).exists():
+                Peer_edges.objects.get(course_id=course , student_roll_num = student, peer_roll_num =peer).delete()
+            return HttpResponseRedirect('/project_allocation/student/'+str(course_id)+'/partner')
+
+    response = redirect('/project_allocation/logout/')
+    return response

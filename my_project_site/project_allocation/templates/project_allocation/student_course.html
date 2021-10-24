@@ -66,7 +66,7 @@
         <div class="footer">
             Total Projects : <span><b>{{num}}</b></span>
         </div>
-        <div class="next_b"><a id="next" target="_self" href="{% url 'project_allocation:student_course_partner' course.id %} "><i class='bx bx-right-arrow-alt'></i></a></div>
+        <div class="next_b"><a id="next" target="_self" href="{% url 'project_allocation:student_course_partner' course_id=course.id %} "><i class='bx bx-right-arrow-alt'></i></a></div>
     {%else%}
         <div class="head">Your instructor is yet to post fun projects. Hang on! </div>
 

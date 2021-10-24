@@ -61,7 +61,7 @@
         {%if friends.count%}
             <ul class="lst">
                 {% for friend in friends %}
-                    <li class="item">{{friend.student_name}}</li>
+                    <li class="item"><span class="bullets" style="width: 200pt !important;">{{friend.student_name}}</span>  <button id="remove_pref"><a class="remove" href="{% url 'project_allocation:student_course_partner_delete' course_id=course.id peer_id=friend.student_roll_num %}">Remove</a></button> </li>
                 {%endfor%}
             </ul>
         {%else%}
@@ -74,7 +74,7 @@
         {% if enemies.count %}
             <ul class="lst">
                 {% for enemy in enemies %}
-                    <li class="item">{{enemy.student_name}}</li>
+                    <li class="item">{{enemy.student_name}} <button id="remove_pref"><a class="remove" href="{% url 'project_allocation:student_course_partner_delete' course_id=course.id peer_id=enemy.student_roll_num %}">Remove</a></button> </li>
                 {%endfor%}
             </ul>
         {%else%}
