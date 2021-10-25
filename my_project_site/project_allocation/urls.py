@@ -21,6 +21,7 @@ urlpatterns = [
 
     path('student/', views.student_index, name='student_index'),
     path('student/<int:course_id>', views.student_course, name='student_course'),
+    path('student/<int:course_id>/delete/<int:project_id>', views.student_course_delete, name='student_course_delete'),
     path('student/<int:course_id>/partner', views.student_course_partner, name='student_course_partner'),
     path('student/<int:course_id>/partner/delete/<int:peer_id>', views.student_course_partner_delete , name="student_course_partner_delete")
 ]

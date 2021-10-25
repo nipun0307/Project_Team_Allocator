@@ -33,7 +33,7 @@
         <div class="section">List of <b>Registered</b> Projects for {{course.course_code}}</div>
         <ol class="register">
             {% for project in taken %}
-                <li class="lst">{{project.project_name}}</li>
+                <li class="lst">{{project.project_name}}<button id="remove_pref"><a class="remove" href="{% url 'project_allocation:student_course_delete' course_id=course.id project_id=project.id %}">Remove</a></button></li>
             {%endfor%}
         </ol>
         {%endif%}

@@ -150,3 +150,21 @@ ul>.register{
 .form{
     font-size: 16pt;
 }
+#remove_pref{
+    border: none;
+    font-size: 12pt;
+    color: #f2f2f2;
+    width: fit-content;
+    padding: 3pt;
+    border-radius: 2pt;
+    cursor: pointer;
+    background-color: #444a97;
+    margin-left: 12pt;
+    margin-top: 4pt;
+    position: absolute;
+
+}
+.remove{
+    text-decoration: none;
+    color: #f2f2f2;
+}

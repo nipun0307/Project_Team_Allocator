@@ -200,6 +200,24 @@ def student_course (request, course_id):
 # ###########################################################################################
 # ###########################################################################################
 
+def student_course_delete(request, course_id, project_id):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
+    user = request.user
+    if user.is_authenticated:
+        if Student.objects.filter(student_email = request.user.email).exists():
+            course=Course.objects.get(pk=course_id)
+            student = Student.objects.get(student_email = request.user.email)
+            project = Project.objects.get(pk=project_id)
+            if Projects_pref.objects.filter(course_id=course , student_roll_num = student, project_id=project).exists():
+                Projects_pref.objects.filter(course_id=course , student_roll_num = student, project_id=project).delete()
+            return HttpResponseRedirect ('/project_allocation/student/'+str(course_id))
+    response = redirect('/project_allocation/logout/')
+    return response
+
+# ###########################################################################################
+# ###########################################################################################
+
 def student_course_partner (request, course_id):
     user = request.user
     if user.is_authenticated:
