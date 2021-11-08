@@ -75,7 +75,6 @@ def instructor_index(request):
                 enrollments[course.id] = len(row)
                 row = Project.objects.filter(course_id = course.id)
                 projects[course.id] = len(row)
-                pub[course.id] = course.is_pub
 
             context = {
                 'courses': courses, 
