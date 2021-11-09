@@ -9,20 +9,24 @@ import random
 
 from project_allocation.models import Student, Instructor, Course, Student_Enrollment, Peer_edges, Project, Projects_pref
 
-df = pd.read_csv("project_allocation/data_csv/student_enrollment.csv")
-
+# df = pd.read_csv("project_allocation/data_csv/student.csv")
 # for i in range (len(df)):
-#     c = Course (course_code = df.iloc[i]['course_code'], course_name = df.iloc[i]['course_name'], instructor_id = Instructor.objects.get(instructor_email=df.iloc[i]['instructor_email']))
-#     c.save()
+#     s = Student (student_roll_num = df.iloc[i]['student_roll'], student_name = df.iloc[i]['student_name'], student_email = df.iloc[i]['student_email'])
+#     s.save()
 
+# df = pd.read_csv("project_allocation/data_csv/instructor.csv")
 # for i in range (len(df)):
 #     ins = Instructor (instructor_name = df.iloc[i]['instructor_name'], instructor_email = df.iloc[i]['instructor_email'])
 #     ins.save()
 
+# df = pd.read_csv("project_allocation/data_csv/course.csv")
 # for i in range (len(df)):
-#     s = Student (student_roll_num = df.iloc[i]['student_roll'], student_name = df.iloc[i]['student_name'], student_email = df.iloc[i]['student_email'])
-#     s.save()
-# ans=0
+#     c = Course (course_code = df.iloc[i]['course_code'], course_name = df.iloc[i]['course_name'], instructor_id = Instructor.objects.get(instructor_email=df.iloc[i]['instructor_email']))
+#     c.save()
+
+
+# # ans=0
+# df = pd.read_csv("project_allocation/data_csv/student_enrollment.csv")
 # for i in  range (len(df)):
 #     student = Student.objects.get(student_roll_num=df.iloc[i]['student_roll'])
 #     lst = str(df.iloc[i]['course_list']).split(',')
@@ -46,6 +50,7 @@ for student in students:
         if rand==1:
             data = Projects_pref(course_id=course, student_roll_num = student, project_id = project)
             data.save()
+
 # stat = ['E', 'F', 'N']
 # for i in range(len(students)):
 #     for j in range (len(students)):

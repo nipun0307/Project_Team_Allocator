@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, response
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 
-from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref
+from .models import Instructor, Student, Course, Project, Student_Enrollment, Peer_edges, Projects_pref, allocation_data
 
 from .forms import AddFriends, AddProjectPref, AddProjectToListForm, AddEnemies
 from django.core.exceptions import ValidationError
@@ -72,19 +72,24 @@ def instructor_index(request):
             enrollments = {}
             projects = {}
             pub = {}
+            computed = {}
             for course in courses:
                 row = Student_Enrollment.objects.filter(course_id = course.id)
                 enrollments[course.id] = len(row)
                 row = Project.objects.filter(course_id = course.id)
                 projects[course.id] = len(row)
                 pub[course.id] = course.published
-
+                if allocation_data.objects.filter(course_id=course).exists():
+                    computed[course.id] = True
+                else:
+                    computed[course.id] = False
             context = {
                 'courses': courses, 
                 'enrollments': enrollments,
                 'projects': projects,
                 'pub': pub,
                 'user' : instructor,
+                'computed' : computed,
             }
 
             return render(request, 'project_allocation/instructor_index.html',context)
@@ -198,12 +203,17 @@ def student_course (request, course_id):
                 form = AddProjectPref(roll_num, course_id)
                 
             projects = Project.objects.filter(course_id=course_id)
+            if projects.count ==0:
+                projects={}
             
             taken_projs = Project.objects.filter(project_id_pref__student_roll_num=s)
             num_projects = taken_projs.count()
             if (num_projects>0):
                 ct=1
             published = course.published
+            computed = False
+            if allocation_data.objects.filter(course_id=course, student_roll_num = s).exists():
+                computed=True
             context={
                 'course' : course,
                 'projects' : projects,
@@ -213,6 +223,7 @@ def student_course (request, course_id):
                 'taken' : taken_projs,
                 'student' : s,
                 'published' : published,
+                'computed' : computed,
             }
             return render(request, 'project_allocation/student_course.html', context)
 
@@ -392,6 +403,9 @@ def start_allocation (request, course_id):
             for t in range(P[i][0]):
                 if (curr_y[(i,t,a)].X != 0):
                     results.append((student_ind[a] , project_ind[i] , t))
+                    if allocation_data.objects.filter (course_id=course, student_roll_num = student_ind[a], project_id = project_ind[i], team_id=t).exists()==False:
+                        data = allocation_data (course_id=course, student_roll_num = student_ind[a], project_id = project_ind[i], team_id=t)
+                        data.save()
     
     dict_res = {}
     i=-1
@@ -415,6 +429,7 @@ def start_allocation (request, course_id):
     print(len(lst))
 
     dict = {1 : ['d','s','a'], 2: ['w','r']}
+    # If some computations have already been done, just dont compute again
 
     context = {
         'results' : results,
@@ -422,8 +437,7 @@ def start_allocation (request, course_id):
         'is_calc' : is_calc,
         'res' : dict_res,
         'projects' : projects,
-        'dict' : dict,
-        'course' : course
+        'course' : course,
     }
     return render(request, 'project_allocation/instructor_compute.html', context)
 
@@ -470,4 +484,81 @@ def computation (n, m, P, G, H):
     return model , y
 
 
+# ###########################################################################################
+# ###########################################################################################
 
+def show_results (request, course_id):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
+    user = request.user
+    if user.is_authenticated:
+        if Instructor.objects.filter(instructor_email = request.user.email).exists() == False:
+            return redirect('/project_allocation/logout/')
+    # get the course
+    course = Course.objects.get(pk = course_id)
+    course.published = False
+    course.save()
+    # get all the students for the course
+    students = Student.objects.filter(student_roll_enrolled__course_id=course_id)
+    # get the projects for the course
+    projects = Project.objects.filter(course_id = course)
+    # results is a mapping such that:
+    # result[project_name] -> result[project_name][team] -> list of students
+    dict_res = {}
+    i=-1
+    for project in projects:
+        i+=1
+        dict_res[project] = {}
+        sets = allocation_data.objects.filter(course_id = course, project_id= project)
+        for set in sets:
+            if set.team_id not in dict_res[project]:
+                dict_res[project][set.team_id]=Student.objects.filter(student_id_allo__course_id=course_id , student_id_allo__team_id=set.team_id , student_id_allo__project_id=project)
+            
+
+    for project in projects:
+        for net in dict_res[project]:
+            print(dict_res[project][net])
+
+    context = {
+        'user' : user,
+        'res' : dict_res,
+        'course' : course,
+    }
+    return render(request, 'project_allocation/instructor_result.html', context)
+
+# ###########################################################################################
+# ###########################################################################################
+
+def student_results (request, course_id):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
+    user = request.user
+    if user.is_authenticated:
+        if Student.objects.filter(student_email = request.user.email).exists() == False:
+            return redirect('/project_allocation/logout/')
+    # get the course
+    course = Course.objects.get(pk = course_id)
+    # get the student
+    student = Student.objects.get(student_email = request.user.email)
+    data = allocation_data.objects.get(course_id=course , student_roll_num = student)
+    team_id = data.team_id
+    project = data.project_id
+    lst = Student.objects.filter(student_id_allo__course_id=course , student_id_allo__team_id=team_id, student_id_allo__project_id=project.id).exclude(student_roll_num = student.student_roll_num)
+    friends = Student.objects.filter(peer_id_peer__student_roll_num=student.student_roll_num, peer_id_peer__course_id=course_id, peer_id_peer__status='F')
+    enemies = Student.objects.filter(peer_id_peer__student_roll_num=student.student_roll_num, peer_id_peer__course_id=course_id, peer_id_peer__status='E')
+    project_pref = Project.objects.filter(project_id_pref__student_roll_num=student)
+    context={
+        'course' : course,
+        'user' : user,
+        'student' : student,
+        'team_id' : team_id,
+        'project' : project,
+        'peers' : lst,
+        'friends' : friends,
+        'enemies' : enemies,
+        'project_pref' : project_pref,
+
+    }
+    return render(request, 'project_allocation/student_results.html', context)
+    # results is a mapping such that:
+    # result[project_name] -> result[project_name][team] -> list of students

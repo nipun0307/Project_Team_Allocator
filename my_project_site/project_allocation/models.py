@@ -98,3 +98,19 @@ class Projects_pref (models.Model):
 
 #     def __str__(self):
 #         return str(self.course_id) + " -> " + str(self.published)
+
+# Class - 9
+class allocation_data (models.Model):
+    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_allo')
+    student_roll_num = models.ForeignKey (Student, on_delete=models.CASCADE, related_name='student_id_allo')
+    project_id = models.ForeignKey (Project, on_delete=models.CASCADE, related_name= 'project_id_allo')
+    team_id = models.IntegerField(validators=[MinValueValidator(1)])
+    class Meta:
+        constraints = [
+        models.UniqueConstraint(fields=['student_roll_num','course_id'], name='unique_allocation')
+        ]
+
+    def __str__(self):
+        return str(self.student_roll_num) + " -> " + str(self.project_id) + " -> " + str(self.team_id)
+
+

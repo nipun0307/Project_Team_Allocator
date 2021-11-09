@@ -27,7 +27,7 @@
 
     <br>
 
-    {%if projects.count%}
+    {%if projects.count and published%}
         {%if taken.count %}
         <br>
         <div class="section">List of <b>Registered</b> Projects for {{course.course_code}}</div>
@@ -67,10 +67,21 @@
             Total Projects : <span><b>{{num}}</b></span>
         </div>
         <div class="next_b"><a id="next" target="_self" href="{% url 'project_allocation:student_course_partner' course_id=course.id %} "><i class='bx bx-right-arrow-alt'></i></a></div>
-    {%else%}
-        <div class="head">Your instructor is yet to post fun projects. Hang on! </div>
+        {%endif%}
+        {%if projects.count == 0%}
+        <br><br><br>
+        <div class="head" style="margin-left: 2em;">Your instructor is yet to post fun projects. Hang on! </div>
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
+        {%endif%}
 
-    {%endif%}
+        {%if computed%}
+        <div class="button"><a class ="button_" href = "{% url 'project_allocation:student_results' course_id=course.id %}"><i class='bx bx-log-in'></i>&nbsp;&nbsp;View Results!</a></div>
+        {%endif%}
 
     <div class="back_b" ><a id="back" target="_self" href="{% url 'project_allocation:student_index' %} "><i class='bx bx-left-arrow-alt' ></i></a></div>
 

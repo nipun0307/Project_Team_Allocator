@@ -4,39 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Allocation | Instructor | Main Page </title>
-    <style>
-         @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-        * {
-            font-family: 'Lato';
-        }
-        body {
-            background-color: #f2f2f2;
-            padding-left: 20px;
-        }
-        h2 {
-            padding-bottom: 10px;
-        }
-        .head{
-            font-size: 2em;
-        }
-        .head2{
-            font-size: 0.7em;
-        }
-    </style>
+    <title>Results | Instructor | Course - {{ course.course_code }} </title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/instructor.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    {% load template_filters %}
-    <!-- <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button> -->
-    <br>
-    <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button>
-    <div class="head">
-        <span style="float : left"> Hi {{user.instructor_name}}! Welcome Back :)</span>
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if request.user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
     </div>
     <br>
+    <div class="head">
+        <span style="float : left; margin-left: 2vw;"> Hi {{user.instructor_name}}!</span>
+        <span style="float: right; margin-right: 2vw;">{{user.instructor_email}}</span>
+    </div>
     {% if courses.count %}
     <br>
-    <hr>
     <h1>List of Courses Offered</h1>
     <button type="success" style = "margin-left: 50px; margin-top: 40px;">Add project list for new course</button>
         {% for course in courses %}
@@ -48,9 +35,13 @@
                 <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
+                {%if not computed|get_value_from_dict:course.id %}
                 <div style = "float : right"><a href="{% url 'project_allocation:instructor_compute' course.id %}">Start Computation</a></div>
-                
+                {%endif%}
                 <div style = "float : right ; margin-right: 2em;"><a href="{% url 'project_allocation:instructor_publish' course.id %}">Publish</a></div>
+                {%if computed|get_value_from_dict:course.id%}
+                <div style = "float : right ; margin-right: 2em;"><a href="{% url 'project_allocation:instructor_results' course.id %}">View Results</a></div>
+                {%endif%}
             </fieldset>
         {% endfor %}
     {%else%}
