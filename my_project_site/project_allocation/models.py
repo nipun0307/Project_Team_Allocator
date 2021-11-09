@@ -28,9 +28,9 @@ class Student(models.Model):
 # Class - 3
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
-    course_code = models.SlugField(max_length=30, default="course-code-not-applicable")
+    course_code = models.SlugField(max_length=30, default="course-code-not-applicable", unique=True)
     instructor_id =  models.ForeignKey(Instructor, on_delete=models.CASCADE)
-
+    published = models.BooleanField (default=False)
     def __str__(self):
         return str(self.course_code)
 
@@ -87,9 +87,14 @@ class Projects_pref (models.Model):
     def __str__ (self):
         return str(self.course_id) + "\t:\t" + str(self.student_roll_num) + "\t:\t" + str(self.project_id)
 
-# Class - 8
-class is_pub (models.Model):
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_pub')
-    published = models.BooleanField (default=False)
-    def __str__(self):
-        return str(self.course_id) + " -> " + str(self.published)
+# # Class - 8
+# class is_pub (models.Model):
+#     course_id = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='course_id_pub')
+#     published = models.BooleanField (default=False)
+#     class Meta:
+#         constraints = [
+#             models.UniqueConstraint(fields=['course_id',], name='unique_pub')
+#         ]
+
+#     def __str__(self):
+#         return str(self.course_id) + " -> " + str(self.published)

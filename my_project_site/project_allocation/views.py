@@ -8,6 +8,9 @@ from .models import Instructor, Student, Course, Project, Student_Enrollment, Pe
 from .forms import AddFriends, AddProjectPref, AddProjectToListForm, AddEnemies
 from django.core.exceptions import ValidationError
 
+import gurobipy as grb
+import random
+
 def index(request):
     return render(request, 'project_allocation/index.html')
 
@@ -45,11 +48,11 @@ def logout_ (request):
 
 def choose (request):
     if request.user.is_authenticated:
-        if Student.objects.filter(student_email = request.user.email).exists():
-            response= redirect('/project_allocation/student/')
-            return response
-        elif Instructor.objects.filter(instructor_email = request.user.email).exists():
+        if Instructor.objects.filter(instructor_email = request.user.email).exists():
             response= redirect('/project_allocation/instructor/')
+            return response
+        elif Student.objects.filter(student_email = request.user.email).exists():
+            response= redirect('/project_allocation/student/')
             return response
     response= redirect('/project_allocation/')
     return response
@@ -69,12 +72,12 @@ def instructor_index(request):
             enrollments = {}
             projects = {}
             pub = {}
-
             for course in courses:
                 row = Student_Enrollment.objects.filter(course_id = course.id)
                 enrollments[course.id] = len(row)
                 row = Project.objects.filter(course_id = course.id)
                 projects[course.id] = len(row)
+                pub[course.id] = course.published
 
             context = {
                 'courses': courses, 
@@ -87,6 +90,21 @@ def instructor_index(request):
             return render(request, 'project_allocation/instructor_index.html',context)
     response = redirect('/project_allocation/logout/')
     return response
+
+# ###########################################################################################
+# ###########################################################################################
+
+def publish_project (request, course_id):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
+    user = request.user
+    if user.is_authenticated:
+        if Instructor.objects.filter(instructor_email = request.user.email).exists() == False:
+            return redirect('/project_allocation/logout/')
+    course = Course.objects.get (pk=course_id)
+    course.published = True
+    course.save()
+    return HttpResponseRedirect('/project_allocation/instructor/')
 
 # ###########################################################################################
 # ###########################################################################################
@@ -185,6 +203,7 @@ def student_course (request, course_id):
             num_projects = taken_projs.count()
             if (num_projects>0):
                 ct=1
+            published = course.published
             context={
                 'course' : course,
                 'projects' : projects,
@@ -193,6 +212,7 @@ def student_course (request, course_id):
                 'form' : form,
                 'taken' : taken_projs,
                 'student' : s,
+                'published' : published,
             }
             return render(request, 'project_allocation/student_course.html', context)
 
@@ -285,3 +305,169 @@ def student_course_partner_delete(request, course_id, peer_id):
 
     response = redirect('/project_allocation/logout/')
     return response
+
+# ###########################################################################################
+# ###########################################################################################
+
+def start_allocation (request, course_id):
+    if request.user.is_authenticated == False:
+        return redirect('/project_allocation/logout/')
+    user = request.user
+    if user.is_authenticated:
+        if Instructor.objects.filter(instructor_email = request.user.email).exists() == False:
+            return redirect('/project_allocation/logout/')
+    
+    # the instructor clicks on start button for particular objects.
+    # It sets the start published for that project to be false
+    is_calc = True
+
+    course = Course.objects.get(pk = course_id)
+    course.published = False
+    course.save()
+    # get all the students for the course
+    students = Student.objects.filter(student_roll_enrolled__course_id=course_id)
+    # get the projects for the course
+    projects = Project.objects.filter(course_id = course)
+    # get the project pref
+    project_prefs = Projects_pref.objects.filter(course_id=course)
+    # get the peer edges : social matrix
+    peer_edges = Peer_edges.objects.filter(course_id=course)
+    # Now creating a mapping for student and projects
+    student_ind = []
+    project_ind = []
+    i=-1
+    for student in students:
+        i+=1
+        student_ind.append(student)
+    i=-1
+    for project in projects:
+        i+=1
+        project_ind.append(project)
+    # creating a project pref network
+    H =[]
+    for i in range(len(student_ind)):
+        lst = [0]*projects.count()
+        curr_student = student_ind[i]
+        curr_pref = project_prefs.filter(student_roll_num = curr_student)
+        j=-1
+        for project in projects:
+            j+=1
+            if curr_pref.filter(project_id=project).exists():
+                lst[j]=1
+        H.append(lst)
+    # creating the social network
+    G = []
+    for i in range(len(student_ind)):
+        lst = [0]*students.count()
+        curr_student = student_ind[i]
+        curr_edges = peer_edges.filter(student_roll_num = curr_student)
+        j=-1
+        for friend in students:
+            j+=1
+            if curr_edges.filter(peer_roll_num = friend, status = 'F').exists():
+                lst[j] = 1
+        j=-1
+        for enemy in students:
+            j+=1
+            if curr_edges.filter(peer_roll_num = enemy, status = 'E').exists():
+                lst[j] = -1
+        G.append(lst)
+    # Generating the project maximum in-take tuple list
+    P=[]
+    for project in projects:
+        P.append((project.num_teams , project.team_size))
+    
+    # Starting the computation
+    m = projects.count()
+    n = students.count()
+    curr_model, curr_y = computation (n,m,P,G,H)
+    is_calc = False
+    # Interpreting the Results
+    # For a particular Student, print the project he got and team number
+    # results is a mapping such that:
+        # result[project_name] -> result[project_name][team] -> list of students
+    results = []
+    for a in range(n):
+        for i in range(m):
+            for t in range(P[i][0]):
+                if (curr_y[(i,t,a)].X != 0):
+                    results.append((student_ind[a] , project_ind[i] , t))
+    
+    dict_res = {}
+    i=-1
+    for project in projects:
+        i+=1
+        dict_res[project] = {}
+        for t in range(project.num_teams):
+            dict_res[project][t]=[]
+            for a in range(n):
+                if (curr_y[(i,t,a)].X != 0):
+                    dict_res[project][t].append(student_ind[a])
+
+    for project in projects:
+        for net in dict_res[project]:
+            print(dict_res[project][net])
+    ans=0
+    lst=[]
+    for result in results:
+        lst.append(result[0])
+    lst = set(lst)
+    print(len(lst))
+
+    dict = {1 : ['d','s','a'], 2: ['w','r']}
+
+    context = {
+        'results' : results,
+        'user' : user,
+        'is_calc' : is_calc,
+        'res' : dict_res,
+        'projects' : projects,
+        'dict' : dict,
+        'course' : course
+    }
+    return render(request, 'project_allocation/instructor_compute.html', context)
+
+# ###########################################################################################
+
+def computation (n, m, P, G, H):
+    GRB = grb.GRB
+    model =grb.Model("Cluster")
+    y_indices = []
+    for i in range(m):
+        for t in range(P[i][0]):
+            for a in range(n):
+                y_indices.append((i,t,a))
+    y = model.addVars(y_indices,vtype=GRB.BINARY,name="y")
+
+    l_indices = []
+    for i in range(m):
+        for t in range(P[i][0]):
+            for a1 in range(n):
+                for a2 in range(n):
+                    l_indices.append((i,t,a1,a2))
+    l = model.addVars(l_indices,vtype=GRB.BINARY,name="l")
+
+    for a in range(n):
+        model.addConstr( 1 == sum(y[(i,t,a)] for i in range (m) for t in range (P[i][0])) )    
+
+    for i in range(m):
+        for t in range (P[i][0]):
+            for a1 in range(n):
+                for a2 in range(n):
+                    model.addConstr(l[(i,t,a1,a2)] == y[(i,t,a1)]*y[(i,t,a2)])
+
+    for i in range(m):
+        for t in range (P[i][0]):
+            model.addConstr( P[i][1] >= sum(y[(i,t,a)] for a in range(n)))
+    
+    model.setObjective(sum((y[(i,t,a)]*H[a][i]) for i in range(m) for t in range (P[i][0]) for a in range (n)) + 
+    sum((l[(i,t,a1, a2)]*G[a1][a2]) for i in range(m) for t in range (P[i][0]) for a1 in range (n) for a2 in range(n) if (a1!=a2))
+    ,GRB.MAXIMIZE)
+
+    model.optimize()
+    print('Obj:', model.objVal)
+
+    return model , y
+
+
+

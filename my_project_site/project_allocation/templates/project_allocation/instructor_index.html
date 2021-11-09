@@ -48,6 +48,9 @@
                 <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
+                <div style = "float : right"><a href="{% url 'project_allocation:instructor_compute' course.id %}">Start Computation</a></div>
+                
+                <div style = "float : right ; margin-right: 2em;"><a href="{% url 'project_allocation:instructor_publish' course.id %}">Publish</a></div>
             </fieldset>
         {% endfor %}
     {%else%}

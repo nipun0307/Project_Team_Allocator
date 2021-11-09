@@ -17,6 +17,8 @@ urlpatterns = [
 
     path('instructor/', views.instructor_index, name='instructor_index'),
     path('instructor/<int:course_id>', views.instructor_course, name='instructor_course'),
+    path('instructor/<int:course_id>/calc', views.start_allocation, name='instructor_compute'),
+    path('instructor/<int:course_id>/publish', views.publish_project, name='instructor_publish'),
 
 
     path('student/', views.student_index, name='student_index'),
