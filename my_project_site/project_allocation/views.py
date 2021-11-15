@@ -226,6 +226,7 @@ def student_course (request, course_id):
                 'computed' : computed,
             }
             return render(request, 'project_allocation/student_course.html', context)
+    return redirect('/project_allocation/logout/')
 
 # ###########################################################################################
 # ###########################################################################################
@@ -453,29 +454,29 @@ def computation (n, m, P, G, H):
                 y_indices.append((i,t,a))
     y = model.addVars(y_indices,vtype=GRB.BINARY,name="y")
 
-    l_indices = []
-    for i in range(m):
-        for t in range(P[i][0]):
-            for a1 in range(n):
-                for a2 in range(n):
-                    l_indices.append((i,t,a1,a2))
-    l = model.addVars(l_indices,vtype=GRB.BINARY,name="l")
+    # l_indices = []
+    # for i in range(m):
+    #     for t in range(P[i][0]):
+    #         for a1 in range(n):
+    #             for a2 in range(n):s
+    #                 l_indices.append((i,t,a1,a2))
+    # l = model.addVars(l_indices,vtype=GRB.BINARY,name="l")
 
     for a in range(n):
         model.addConstr( 1 == sum(y[(i,t,a)] for i in range (m) for t in range (P[i][0])) )    
 
-    for i in range(m):
-        for t in range (P[i][0]):
-            for a1 in range(n):
-                for a2 in range(n):
-                    model.addConstr(l[(i,t,a1,a2)] == y[(i,t,a1)]*y[(i,t,a2)])
+    # for i in range(m):
+    #     for t in range (P[i][0]):
+    #         for a1 in range(n):
+    #             for a2 in range(n):
+    #                 model.addConstr(l[(i,t,a1,a2)] == y[(i,t,a1)]*y[(i,t,a2)])
 
     for i in range(m):
         for t in range (P[i][0]):
             model.addConstr( P[i][1] >= sum(y[(i,t,a)] for a in range(n)))
     
     model.setObjective(sum((y[(i,t,a)]*H[a][i]) for i in range(m) for t in range (P[i][0]) for a in range (n)) + 
-    sum((l[(i,t,a1, a2)]*G[a1][a2]) for i in range(m) for t in range (P[i][0]) for a1 in range (n) for a2 in range(n) if (a1!=a2))
+    sum((y[(i,t,a1)]*y[(i,t,a2)]*G[a1][a2]) for i in range(m) for t in range (P[i][0]) for a1 in range (n) for a2 in range(n) if (a1!=a2))
     ,GRB.MAXIMIZE)
 
     model.optimize()
