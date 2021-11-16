@@ -134,12 +134,7 @@ body {
 .back_b>#back , .next_b>#next{
     color: #f2f2f2;
 }
-fieldset{
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2vw;
-}
+
 .lst{
     font-size: 20pt;
     color: #f2f2f2;
@@ -201,4 +196,22 @@ fieldset{
     color: #f2f2f2;
     width: 3pt;
     width: 100%;
+}
+
+.heading_form{
+    font-size: 18pt;
+    color: #444a97;
+    background-color: #f2f2f2;
+    padding: 5pt;
+    border-radius: 5pt;
+    border-style: solid;
+    border-color: #444a97;
+}
+fieldset{
+    color: white;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2vw;
+    background-color: #858df1;
 }

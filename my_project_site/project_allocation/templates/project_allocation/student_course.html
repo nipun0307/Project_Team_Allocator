@@ -27,7 +27,7 @@
 
     <br>
 
-    {%if projects.count and published%}
+    {%if projects.count and published and not computed%}
         {%if taken.count %}
         <br>
         <div class="section">List of <b>Registered</b> Projects for {{course.course_code}}</div>
@@ -67,6 +67,16 @@
             Total Projects : <span><b>{{num}}</b></span>
         </div>
         <div class="next_b"><a id="next" target="_self" href="{% url 'project_allocation:student_course_partner' course_id=course.id %} "><i class='bx bx-right-arrow-alt'></i></a></div>
+        {%endif%}
+        {%if projects.count and not published and not computed%}
+        <br><br><br>
+        <div class="head" style="margin-left: 2em;">Your instructor has decided on some interesting projects but is yet to float them! </div>
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
+        <br><br><br>
         {%endif%}
         {%if projects.count == 0%}
         <br><br><br>

@@ -44,7 +44,7 @@ class Project(models.Model):
     num_teams = models.IntegerField(validators=[MinValueValidator(1)])
 
     def __str__(self):
-        return str(self.project_name)
+        return str(self.project_name) + " : " + str(self.course_id)
 1   
 
 # Class - 7
