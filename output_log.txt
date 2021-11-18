@@ -1,0 +1,153 @@
+<<< TEST - 1 >>> 
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 18.0, Time = 0.33909222200009026 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+
+------------------------------------------------------------------------------
+
+<<< TEST - 2 >>> 
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 34.0, Time = 0.6977077530000315 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+
+------------------------------------------------------------------------------
+
+<<< TEST - 3-9 >>> 
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 75.0, Time = 0.06390081200015629 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 150.0, Time = 0.5178701779996118 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 250.0, Time = 2.3879029879999507 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 375.0, Time = 9.85201882399997 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 500.0, Time = 25.73187429799964 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 750.0, Time = 117.08732247900025 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 1000.0, Time = 363.25340986799984 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+------------------------------------------------------------------------------
+
+<<< TEST - 10-16 >>> 
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 39.0, Time = 0.73935148999999 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 78.0, Time = 58.16614836999997 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = False, Objective value = 130.0, Time = 602.4967923389995 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = False, Objective value = 195.0, Time = 324.47917090600004 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = False, Objective value = 260.0, Time = 201.70152159700046 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = False, Objective value = 390.0, Time = 781.9324958079997 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = False, Objective value = 520.0, Time = 1494.6080381849997 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+------------------------------------------------------------------------------
+
+<<< TEST - 17-23 >>> 
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 39.0, Time = 0.16348017500058631 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 78.0, Time = 0.8385277530005624 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 130.0, Time = 4.049404428999878 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 195.0, Time = 15.600093609000396 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 260.0, Time = 50.887019469000734 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 390.0, Time = 286.3419573910005 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True
+
+Changed value of parameter Timelimit to 600.0
+   Prev: inf  Min: 0.0  Max: inf  Default: inf
+Status = True, Objective value = 520.0, Time = 1244.9219997049995 seconds.
+Constraints satisfied = True, Number of constraints broken = 0.
+True

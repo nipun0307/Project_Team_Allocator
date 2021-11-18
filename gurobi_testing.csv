@@ -1,0 +1,24 @@
+,test_num,test_desc,students,projects,time_taken(s),status,obj_val,constraints_satisfied,num_constraints_broken
+0,1,Generic small example to see if testing structure is working,10,3,0.33909222200009026,2,18.0,True,0
+1,1,Generic small example to see if testing structure is working,15,4,0.6977077530000315,2,34.0,True,0
+2,3,Easy eample where groups of friends have same project preferences fitting within the team size bounds (everything is multiples of 5),15,3,0.06390081200015629,2,75.0,True,0
+3,4,Same structure as test 3 for increasing n and m,30,6,0.5178701779996118,2,150.0,True,0
+4,5,Same structure as test 3 for increasing n and m,50,10,2.3879029879999507,2,250.0,True,0
+5,6,Same structure as test 3 for increasing n and m,75,15,9.85201882399997,2,375.0,True,0
+6,7,Same structure as test 3 for increasing n and m,100,20,25.73187429799964,2,500.0,True,0
+7,8,Same structure as test 3 for increasing n and m,150,30,117.08732247900025,2,750.0,True,0
+8,9,Same structure as test 3 for increasing n and m,200,40,363.25340986799984,2,1000.0,True,0
+9,10,"Project preference and friend prefernece kept same as test 3, however number of sub teams in a project made to 2",15,3,0.73935148999999,2,39.0,True,0
+10,11,Same structure as test 10 for increasing n and m,30,6,58.16614836999997,2,78.0,True,0
+11,12,Same structure as test 10 for increasing n and m,50,10,602.4967923389995,9,130.0,True,0
+12,13,Same structure as test 10 for increasing n and m,75,15,324.47917090600004,9,195.0,True,0
+13,14,Same structure as test 10 for increasing n and m,100,20,201.70152159700046,9,260.0,True,0
+14,15,Same structure as test 10 for increasing n and m,150,30,781.9324958079997,9,390.0,True,0
+15,16,Same structure as test 10 for increasing n and m,200,40,1494.6080381849997,9,520.0,True,0
+16,17,"Project preference kept same as test 3, however number of sub teams in a project made to 2 and friendships also kept changed according to subteam division",15,3,0.16348017500058631,2,39.0,True,0
+17,18,Same structure as test 17 for increasing n and m,30,6,0.8385277530005624,2,78.0,True,0
+18,19,Same structure as test 17 for increasing n and m,50,10,4.049404428999878,2,130.0,True,0
+19,20,Same structure as test 17 for increasing n and m,75,15,15.600093609000396,2,195.0,True,0
+20,21,Same structure as test 17 for increasing n and m,100,20,50.887019469000734,2,260.0,True,0
+21,22,Same structure as test 17 for increasing n and m,150,30,286.3419573910005,2,390.0,True,0
+22,23,Same structure as test 17 for increasing n and m,200,40,1244.9219997049995,2,520.0,True,0
