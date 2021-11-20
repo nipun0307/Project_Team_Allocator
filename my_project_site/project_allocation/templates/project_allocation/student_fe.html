@@ -31,7 +31,7 @@
         Enter {{course.course_code}} Project Partner Preferences
     </div>
     <div class="form">
-        <div class="footer">Enter Friends</div>
+        <div class="footer">Enter Preferred Teammates</div>
         <div class="fields">
             <div>Enrollment Number: &nbsp;&nbsp;{{s.student_roll_num}}</div>
             <form action="" method=POST>
@@ -44,7 +44,7 @@
 
     <br><br>
     <div class="form">
-        <div class="footer">Enter Enemies</div>
+        <div class="footer">Enter Non-Preferred Teammates</div>
         <div class="fields">
             <div>Enrollment Number: &nbsp;&nbsp;{{s.student_roll_num}}</div>
             <form action="" method=POST>
@@ -57,7 +57,7 @@
     <br>
     <br>
     <div >
-        <div class="section">List Of Added Friends</div>
+        <div class="section">List Of Preferred Teammates</div>
         {%if friends.count%}
             <ul class="lst">
                 {% for friend in friends %}
@@ -70,7 +70,7 @@
     </div>
 
     <div>
-        <div class="section">List Of Added Enemies</div>
+        <div class="section">List Of Non-Preferred Teammates</div>
         {% if enemies.count %}
             <ul class="lst">
                 {% for enemy in enemies %}

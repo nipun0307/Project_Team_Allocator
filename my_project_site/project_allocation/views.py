@@ -334,7 +334,7 @@ def start_allocation (request, course_id):
     is_calc = True
 
     course = Course.objects.get(pk = course_id)
-    course.published = False
+    course.published = True
     course.save()
     # get all the students for the course
     students = Student.objects.filter(student_roll_enrolled__course_id=course_id)
@@ -497,7 +497,7 @@ def show_results (request, course_id):
             return redirect('/project_allocation/logout/')
     # get the course
     course = Course.objects.get(pk = course_id)
-    course.published = False
+    course.published = True
     course.save()
     # get all the students for the course
     students = Student.objects.filter(student_roll_enrolled__course_id=course_id)

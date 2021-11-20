@@ -57,12 +57,13 @@ class AddProjectPref (ModelForm):
 class AddFriends (ModelForm):
     def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddFriends, self).__init__(*args, **kwargs)
-        students=Student.objects.filter(student_roll_enrolled__course_id=course_id ).exclude(student_roll_num = roll_num).exclude(peer_id_peer__status="F").exclude(peer_id_peer__status="E")
+        curr_student = Student.objects.get(student_roll_num = roll_num)
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id )
         # students= students.student_roll_enrolled.all()
         
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
-        self.fields['peer_roll_num'].label="Friend ID\t\t"
+        self.fields['peer_roll_num'].label="Preferred Teammate ID\t\t"
         # self.fields['status']= forms.ChoiceField(choices=peer_choice_friend)
     
     class Meta():
@@ -74,12 +75,12 @@ class AddFriends (ModelForm):
 class AddEnemies (ModelForm):
     def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddEnemies, self).__init__(*args, **kwargs)
-        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).exclude(student_roll_num = roll_num).exclude(student_roll_num = roll_num).exclude(peer_id_peer__status="F").exclude(peer_id_peer__status="E")
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).exclude(student_roll_num = roll_num)
         # students= students.student_roll_enrolled.all()
         
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
-        self.fields['peer_roll_num'].label="Enemy ID\t\t"
+        self.fields['peer_roll_num'].label="Non-Preferred Teammate ID\t\t"
         # self.fields['status']= forms.ChoiceField(choices=peer_choice_enemy)
 
     class Meta():
