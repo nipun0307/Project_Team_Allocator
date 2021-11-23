@@ -215,3 +215,13 @@ fieldset{
     margin-bottom: 2vw;
     background-color: #858df1;
 }
+.course_head{
+    color: #444a97;
+    background-color: white;
+    text-decoration: none;
+}
+.course_legend{
+    background-color: white;
+    border-color: #858df1;
+    border-width: 2pt;
+}

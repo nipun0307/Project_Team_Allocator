@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results | Instructor | Course - {{ course.course_code }} </title>
+    <title>Instructor | Courses</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/instructor.css' %}">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
@@ -28,7 +28,7 @@
     <!-- <button type="success" style = "margin-left: 50px; margin-top: 40px;">Add project list for new course</button> -->
         {% for course in courses %}
             <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
-                <legend style="margin-bottom: -10px;"><h1><a style="text-decoration: none ; color: white" href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
+                <legend  style="margin-bottom: -10px; "><h1 class="course_legend"><a class="course_head" href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;

@@ -2,7 +2,7 @@ from django import forms
 from django.db.models.query import QuerySet
 from django.forms import ModelForm
 
-from .models import Peer_edges, Project, Projects_pref, Student, Student_Enrollment, Instructor
+from .models import Course, Peer_edges, Project, Projects_pref, Student, Student_Enrollment, Instructor
 
 peer_choice_enemy = (
     ('E','Enemy'),
@@ -58,9 +58,14 @@ class AddFriends (ModelForm):
     def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddFriends, self).__init__(*args, **kwargs)
         curr_student = Student.objects.get(student_roll_num = roll_num)
-        students=Student.objects.filter(student_roll_enrolled__course_id=course_id )
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id ).exclude(student_roll_num=roll_num)
+        peer=[]
+        for student in students:
+            if (Peer_edges.objects.filter(course_id=Course.objects.get(pk=course_id) , student_roll_num = curr_student, peer_roll_num = student, status="F").exists()==False \
+                and Peer_edges.objects.filter(course_id=Course.objects.get(pk=course_id) , student_roll_num = curr_student, peer_roll_num = student, status="E").exists()==False) :
+                peer.append(student.student_roll_num)
         # students= students.student_roll_enrolled.all()
-        
+        students=Student.objects.filter(pk__in=peer)
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num'].label="Preferred Teammate ID\t\t"
@@ -75,9 +80,15 @@ class AddFriends (ModelForm):
 class AddEnemies (ModelForm):
     def __init__ (self, roll_num, course_id, *args, **kwargs):
         super(AddEnemies, self).__init__(*args, **kwargs)
-        students=Student.objects.filter(student_roll_enrolled__course_id=course_id).exclude(student_roll_num = roll_num)
+        curr_student = Student.objects.get(student_roll_num = roll_num)
+        students=Student.objects.filter(student_roll_enrolled__course_id=course_id ).exclude(student_roll_num=roll_num)
+        peer=[]
+        for student in students:
+            if (Peer_edges.objects.filter(course_id=Course.objects.get(pk=course_id) , student_roll_num = curr_student, peer_roll_num = student, status="F").exists()==False \
+                and Peer_edges.objects.filter(course_id=Course.objects.get(pk=course_id) , student_roll_num = curr_student, peer_roll_num = student, status="E").exists()==False) :
+                peer.append(student.student_roll_num)
         # students= students.student_roll_enrolled.all()
-        
+        students=Student.objects.filter(pk__in=peer)
         # self.fields['student_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num']=forms.ModelChoiceField(queryset=students)
         self.fields['peer_roll_num'].label="Non-Preferred Teammate ID\t\t"

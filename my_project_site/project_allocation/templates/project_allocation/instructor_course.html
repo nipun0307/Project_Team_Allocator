@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results | Instructor | Course - {{ course.course_code }} </title>
+    <title>Projects | Instructor | Course - {{ course.course_code }} </title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/instructor.css' %}">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
@@ -47,6 +47,8 @@
             </div>
         </fieldset>
     {% endfor %}
-    
+
+    <div class="back_b" ><a id="back" target="_self" href="{% url 'project_allocation:instructor_index' %} "><i class='bx bx-left-arrow-alt' ></i></a></div>
+
 </body>
 </html>
