@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | Student | Course - {{ course.course_code }} </title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/student_results.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if request.user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
+    {% load template_filters %}
+
+    <h1> Results of Allocation  : {{ course.course_code }} </h1> 
+    <ul>
+        <div class="form">
+            <div class="footer">{{project.project_name}}</div>
+            <div class="fields">
+                <div class="subhead">Team ID : {{team_id}}</div>
+                {%for student in peers%}
+                    <div class="lst">{{student.student_name}}</div>
+                {% empty %} 
+                <div class="lst"><<< No Peer >>></div>
+                {%endfor%}
+        </div>
+        </div>
+    </ul>
+    <br><hr><br>
+
+    <div class= "section">
+        <div class ="sec1">
+            <h3>People you wanted to work with</h3>
+            <ul>
+                {%for friend in friends%}
+                <li>{{friend.student_name}}</li>
+                {%empty%}
+                No one
+                {%endfor%}
+            </ul>
+        </div>
+        <div class ="sec2">
+            <h3 class="right">People you aren't comfortable with</h3>
+            <ul>
+                {%for enemy in enemies%}
+                <li>{{enemy.student_name}}</li>
+                {%empty%}
+                No one
+                {%endfor%}
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+    <br>
+    <div>
+        <h3>Project Preferences as filled by you</h3>
+        <ul>
+            {%for project in project_pref%}
+            <li>{{project.project_name}}</li>
+            {%empty%}
+            No Preferences
+            {%endfor%}
+        </ul>
+    </div>
+    <br>
+
+    <div class="back_b" ><a id="back" target="_self" href="{% url 'project_allocation:student_index' %} "><i class='bx bx-left-arrow-alt' ></i></a></div>
+
+</body>
+</html>

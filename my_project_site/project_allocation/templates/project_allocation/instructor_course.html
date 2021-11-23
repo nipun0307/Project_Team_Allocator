@@ -4,9 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Allocation | Instructor | Course - {{ course.course_code }} </title>
+    <title>Projects | Instructor | Course - {{ course.course_code }} </title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/instructor.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if request.user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
     {% load template_filters %}
 
     <h1> Create new project  - {{ course.course_code }} </h1> 
@@ -19,30 +29,26 @@
                 {{ form.as_p }}
                 <input type="submit" value=" + Add project">
             </form>
-            <!--
-            <span> Enter name : <input type="text"> </span>
-            &nbsp;
-            &nbsp;
-            <span> Description : <input type="text"> </span>
-            &nbsp;
-            <span> Max teams : <input type="number"> </span>
-            &nbsp;
-            <span> Max team size : <input type="number"> </span> -->
     </fieldset>
 
     <h1> Existing projects  - {{ course.course_code }} </h1> 
 
     {% for project in projects %}
         <fieldset>
-            <legend><h1>{{project.project_name}}</h1></legend>
+            <legend><div class="heading_form">{{project.project_name}}</div></legend>
+            <b>Description : </b><div>
+                {{ project.project_description }} 
+            </div>
             &nbsp;
-            <span>  Description : {{ project.project_description }} </span>
-            &nbsp;
-            <span> Max teams : {{ project.num_teams }} </span>
-            &nbsp;
-            <span> Max team size : {{ project.team_size }} </span>
+            <div >
+                <span> Max teams : {{ project.num_teams }} </span>
+                &nbsp;
+                <span> Max team size : {{ project.team_size }} </span>
+            </div>
         </fieldset>
     {% endfor %}
-    
+
+    <div class="back_b" ><a id="back" target="_self" href="{% url 'project_allocation:instructor_index' %} "><i class='bx bx-left-arrow-alt' ></i></a></div>
+
 </body>
 </html>

@@ -4,45 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Allocation | Instructor | Main Page </title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-        * {
-            font-family: 'Lato';
-        }
-        body {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <title>Instructor | Courses</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/instructor.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    {% load template_filters %}
-
-    <button type="success" style = "margin-left: 50px; margin-top: 40px;"
-            onclick="document.getElementById('add_course_to_index').style.display = 'block'">
-            Add project list for new course</button>
-
-    <div id='add_course_to_index' style="display:none; margin-left: 50px;">
-        <form action="" method=POST>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value=" + Add">
-        </form>
-    </div>    
-
-    {% for course in courses %}
-        {% if course not in not_created_courses %}
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if request.user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
+    <br>
+    <div class="head">
+        <span style="float : left; margin-left: 2vw;"> Hi {{user.instructor_name}}!</span>
+        <span style="float: right; margin-right: 2vw;">{{user.instructor_email}}</span>
+    </div>
+    {% if courses.count %}
+    <br>
+    <h1>List of Courses Offered</h1>
+    <!-- <button type="success" style = "margin-left: 50px; margin-top: 40px;">Add project list for new course</button> -->
+        {% for course in courses %}
             <fieldset style= "margin-left: auto; margin-right: auto; width: 90%; margin-bottom: 10px;">
-                <legend style="margin-bottom: -10px;"><h1><a href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
+                <legend  style="margin-bottom: -10px; "><h1 class="course_legend"><a class="course_head" href="{% url 'project_allocation:instructor_course' course.id %}">{{course.course_code}}</a></h1></legend>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span> Number of student enrolled: {{ enrollments|get_value_from_dict:course.id }} </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span> Number of projected added: {{ projects|get_value_from_dict:course.id }} </span>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <span> Is_published: {{ pub|get_value_from_dict:course.id }} </span>
+                {%if not computed|get_value_from_dict:course.id and pub|get_value_from_dict:course.id%}
+                <div style = "float : right"><a style="text-decoration: none ; color: white" href="{% url 'project_allocation:instructor_compute' course.id %}">Start Computation</a></div>
+                {%endif%}
+                {% if not pub|get_value_from_dict:course.id and projects|get_value_from_dict:course.id%}
+                <div style = "float : right ; margin-right: 2em;"><a style="text-decoration: none ; color: white" href="{% url 'project_allocation:instructor_publish' course.id %}">Publish</a></div>
+                {%endif%}
+                {%if computed|get_value_from_dict:course.id and pub|get_value_from_dict:course.id%}
+                <div style = "float : right ; margin-right: 2em;"><a style="text-decoration: none ; color: white" href="{% url 'project_allocation:instructor_results' course.id %}">View Results</a></div>
+                {%endif%}
             </fieldset>
-        {% endif %}
-    {% endfor %}
+        {% endfor %}
+    {%else%}
+    <br><hr><br>
+            <div class="head"> No courses offered this semester :(<div class="head2">Please contact administrator if you this is a mistake!</div> </div>
+    {%endif%}
     
 </body>
 </html>

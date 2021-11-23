@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | Instructor | Course - {{ course.course_code }} </title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/instructor.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
+    {% load template_filters %}
+
+    <h1> Results of Allocation  : {{ course.course_code }} </h1> 
+    <ul>
+        {%for key, value in res.items%}
+        <div class="form">
+            <div class="footer">{{key.project_name}}</div>
+            <div class="fields">
+            {%for key, value in value.items%}
+                
+                <div class="subhead">Team ID : {{key}}</div>
+                {%for student in value%}
+                    <div class="lst">{{student.student_name}}</div>
+                {% empty %} 
+                <div class="lst"><<< No Allocation >>></div>
+                {%endfor%}
+                {% empty %} 
+                <div class="lst"><<< No Allocation >>></div>
+            {%endfor%}
+        </div>
+        </div>
+        {%endfor%}
+    </ul>
+    <div class="back_b" ><a id="back" target="_self" href="{% url 'project_allocation:instructor_index' %} "><i class='bx bx-left-arrow-alt' ></i></a></div>
+
+</body>
+</html>

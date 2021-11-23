@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student | {{course.course_code}} | Partners</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/student_fe.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% load template_filters %}
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        <div class="home_icon"><a id="home" href="{% url 'project_allocation:student_index' %}"><i class='bx bx-home-alt'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
+    {% load template_filters %}
+    <br>
+    <!-- <button style=" margin-left: 3vw; margin-top: 0vw; margin-bottom: 1vw; font-size: 1.2em;"><a href="{% url 'project_allocation:my_logout' %}">Logout :(</a></button> -->
+    <div class="head">
+        <span style="float : left; margin-left: 2vw;"> {{s.student_name}}</span>
+        <span style="float: right; margin-right: 2vw;">{{s.student_roll_num}}</span>
+    </div>
+    <br>
+    <div class="section" style="margin-top: 2vw; margin-bottom: 2vw;">
+        Enter {{course.course_code}} Project Partner Preferences
+    </div>
+    <div class="form">
+        <div class="footer">Enter Preferred Teammates</div>
+        <div class="fields">
+            <div>Enrollment Number: &nbsp;&nbsp;{{s.student_roll_num}}</div>
+            <form action="" method=POST>
+                {% csrf_token %}
+                {{ form_f.as_p }}
+                <button id="form_button" type="submit" name="friend">+ Add Friend</button>
+            </form>
+        </div>
+    </div>
+
+    <br><br>
+    <div class="form">
+        <div class="footer">Enter Non-Preferred Teammates</div>
+        <div class="fields">
+            <div>Enrollment Number: &nbsp;&nbsp;{{s.student_roll_num}}</div>
+            <form action="" method=POST>
+                {% csrf_token %}
+                {{ form_e.as_p }}
+                <button id="form_button" type="submit" name="enemy">+ Add Enemy</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div >
+        <div class="section">List Of Preferred Teammates</div>
+        {%if friends.count%}
+            <ul class="lst">
+                {% for friend in friends %}
+                    <li class="item"><span class="bullets" style="width: 200pt !important;">{{friend.student_name}}</span>  <button id="remove_pref"><a class="remove" href="{% url 'project_allocation:student_course_partner_delete' course_id=course.id peer_id=friend.student_roll_num %}">Remove</a></button> </li>
+                {%endfor%}
+            </ul>
+        {%else%}
+            <div class="list">&nbsp;&nbsp;&nbsp;&nbsp;Add Friends you want to work with. It will be fun!</div>
+        {%endif%}
+    </div>
+
+    <div>
+        <div class="section">List Of Non-Preferred Teammates</div>
+        {% if enemies.count %}
+            <ul class="lst">
+                {% for enemy in enemies %}
+                    <li class="item">{{enemy.student_name}} <button id="remove_pref"><a class="remove" href="{% url 'project_allocation:student_course_partner_delete' course_id=course.id peer_id=enemy.student_roll_num %}">Remove</a></button> </li>
+                {%endfor%}
+            </ul>
+        {%else%}
+            <div class="list">&nbsp;&nbsp;&nbsp;&nbsp;Seems like you are fine with everyone!</div>
+        {%endif%}
+    </div>
+    <br>
+    <div class="back_b" ><a id="back" target="_self" href="{% url 'project_allocation:student_course' course.id %} "><i class='bx bx-left-arrow-alt' ></i></a></div>
+    <!-- <button style="float:right ; margin-right: 4vw; margin-top: 2vw; margin-bottom: 2vw; font-size: 1.2em;"> <a href="{% url 'project_allocation:student_course' course.id %}" style="text-decoration: none;"><b>Done!</b></a></button> -->
+    <div class="done_b" ><a id="done" target="_self" href="{% url 'project_allocation:student_index'%}"><i class='bx bx-check' ></i></a></div>
+
+</body>
+</html>

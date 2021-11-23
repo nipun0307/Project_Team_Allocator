@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+*{
+    font-family: 'Lato' , sans-serif;
+   
+}
+h2 {
+    margin-left: 1vw;
+    padding-bottom: 10px;
+    font-size: 1.8vw;
+    color: #39323a;
+}
+
+.head{
+    color: #39323a;
+    font-size: 24pt;
+    margin-bottom: 1vw;
+}
+
+.header{
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    font-weight: 900;
+    font-size: 2vw;
+    background-color: #858df1;
+    color: #f2f2f2;
+}
+
+.heading {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    color: #f2f2f2;
+}
+
+.section{
+    padding-left: 2vw;
+    padding-top: 0.7vw;
+    padding-bottom: 0.7vw;
+    background-color: #858df1;
+    color: #f2f2f2;
+}
+
+.section{
+    font-size: 24pt;
+}
+
+body {
+    background-color: #f2f2f2;
+    margin:0vw;
+}
+.log_icon{
+    width: fit-content;
+    float: left;
+    color: #f2f2f2;
+}
+.log_icon #logout{
+    color: #f2f2f2;
+    margin-left: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    padding-right: 0.5vw;
+
+}
+
+#logout:hover{
+    background-color: #f2f2f2;
+    color: #858df1;
+    border-radius: 00.5vw;
+    transition: background-color 0.3s;
+}
+
+.ptr{
+    padding: 0.2vw;
+    text-decoration: none;
+}
+.ptr .c_name{
+    display: none;
+    text-decoration: none;
+    color: #444a97;
+}
+.ptr .c_code{
+    text-decoration: none;
+}
+a:visited{
+    text-decoration: none;
+}
+.ptr:hover{
+    color: #f2f2f2;
+    background-color: #858df1;
+    width: fit-content + 1vw;
+    border-radius: 0.5vw;
+    text-decoration: none;
+}
+.ptr:hover .c_name{
+    display: inline;
+    text-decoration: none;
+    color: #f2f2f2;
+
+}
+.ptr:hover .c_code{
+    display: none;
+    text-decoration: none;
+}
+
+
+.course_list>.head{
+    color: #444a97;
+    border: 0.3vw;
+    border-radius: 1vw;
+    padding : 0.5vw;
+    border-style: solid;
+    width: fit-content;
+    border-color: #858df1;
+}
+.course_list .head_list{
+    font-size: 20pt;
+}
+
+ul{
+    color: #444a97;
+}
+
+li {
+    list-style: none;
+}
+
+li::before{
+    content: "\00BB";
+}

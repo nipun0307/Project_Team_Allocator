@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'project_allocation/index_login.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% load socialaccount %}
+    <div class="header"> 
+        {% if user.is_authenticated %}
+        <div class="log_icon"><a id="logout" href="{% url 'project_allocation:my_logout' %}"><i class='bx bx-log-out'></i></a></div>
+        {%endif%}
+        <div class="heading">Cluster Allotment</div>
+    </div>
+    {% if user.is_authenticated %}
+
+        <div style="margin-bottom: 1vw;"> <h2>Welcome, you are logged in as <b>{{name}}</b></h2></div>
+        <div class= "head"> Lost? No worries! <a class = "ptr" href = "{% url 'project_allocation:choose' %}" style="text-decoration: none;">Click Here!</a> </div>
+    {%else %}
+        <div class="button"><a class ="button_" href = "{% provider_login_url 'google' %}?next={% url 'project_allocation:choose' %}"><i class='bx bx-log-in'></i>&nbsp;&nbsp;Login With Google!</a></div>
+    {%endif%}
+</body>
+</html>

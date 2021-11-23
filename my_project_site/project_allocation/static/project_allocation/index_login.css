@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+*{
+    font-family: 'Lato' , sans-serif;
+}
+h2 {
+    margin-left: 1vw;
+    padding-bottom: 10px;
+    font-size: 1.8vw;
+    color: #39323a;
+}
+.head{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.4em;
+    color: #39323a;
+}
+
+.header{
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    font-weight: 900;
+    font-size: 2vw;
+    background-color: #858df1;
+    color: #f2f2f2;
+}
+
+.heading {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    color: #f2f2f2;
+}
+
+body {
+    background-color: #f2f2f2;
+    margin:0vw;
+}
+
+.log_icon{
+    width: fit-content;
+    float: left;
+}
+.ptr{
+    padding: 0.2vw;
+}
+.ptr:hover{
+    color: #f2f2f2;
+    background-color: #858df1;
+    width: fit-content + 1vw;
+    border-radius: 0.5vw;
+}
+
+#logout{
+    color: #f2f2f2;
+    margin-left: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    padding-right: 0.5vw;
+
+}
+
+#logout:hover{
+    background-color: #f2f2f2;
+    color: #858df1;
+    border-radius: 00.5vw;
+    transition: background-color 0.3s;
+}
+
+.button {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6vw;
+}
+.button_{
+    font-size: 1.6vw;
+    background-color: #858df1;
+    width: fit-content;
+    border-radius: 1vw;
+    padding : 1vw;
+    color: #f2f2f2;
+    text-decoration: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6vw;
+}
+
+.button_:hover{
+    background-color: #f2f2f2;
+    color: #858df1;
+    text-decoration: underline;
+    transition: background-color 0.5s;
+}

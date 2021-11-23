@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+*{
+    font-family: 'Lato' , sans-serif;
+   
+}
+
+h1 {
+    color: #f2f2f2;
+    background-color: #858df1;
+    padding: 0.5em;
+    width: fit-content;
+    border-top-right-radius: 10pt;
+    border-bottom-right-radius: 10pt;
+}
+
+h2 {
+    margin-left: 1vw;
+    padding-bottom: 10px;
+    font-size: 1.8vw;
+    color: #39323a;
+}
+
+.head{
+    color: #39323a;
+    font-size: 24pt;
+    margin-bottom: 1vw;
+}
+
+.header{
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    font-weight: 900;
+    font-size: 2vw;
+    background-color: #858df1;
+    color: #f2f2f2;
+}
+
+.heading {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    color: #f2f2f2;
+}
+
+body {
+    background-color: #f2f2f2;
+    margin:0vw;
+}
+.log_icon{
+    width: fit-content;
+    float: left;
+    color: #f2f2f2;
+}
+.log_icon #logout{
+    color: #f2f2f2;
+    margin-left: 1vw;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    padding-right: 0.5vw;
+
+}
+
+#logout:hover{
+    background-color: #f2f2f2;
+    color: #858df1;
+    border-radius: 00.5vw;
+    transition: background-color 0.3s;
+}
+
+.section {
+    padding-left: 2vw;
+    padding-top: 0.7vw;
+    padding-bottom: 0.7vw;
+    background-color: #858df1;
+    color: #f2f2f2;
+}
+
+.section{
+    font-size: 24pt;
+}
+
+
+.item{
+    color: #39323a;
+    font-size: 14pt;
+}
+.footer{
+    width: 80%;
+    margin:auto;
+    font-size: 20pt;
+    border-style: solid;
+    color:#444a97;
+    background-color: #f2f2f2;
+    padding: 9pt;
+    border-top-left-radius: 9pt;
+    border-top-right-radius: 9pt;
+    border-color: #858df1;
+}
+.form>.fields{
+    font-size: 16pt;
+    width: 81.7%;
+    margin : auto;
+    color: #f2f2f2;
+    padding : 9pt 0pt 9pt 0pt;
+    background-color: #858df1;
+    border-style: solid;
+    border-color: #858df1;
+}
+
+.next_b{
+    width:fit-content;
+    color: #f2f2f2 !important;
+    background-color: #444a97;
+    padding : 0.4vw 0.7vw 0.4vw 0.7vw;
+    font-size: 3.2vw;
+    border-radius: 1vw;
+    margin-bottom: 1vw;
+    text-decoration: none;
+    margin-right: 2vw;
+    float: right;
+}
+.back_b{
+    width:fit-content;
+    color: #f2f2f2 !important;
+    background-color: #444a97;
+    padding : 0.4vw 0.7vw 0.4vw 0.7vw;
+    font-size: 3.2vw;
+    border-radius: 1vw;
+    margin-bottom: 1vw;
+    text-decoration: none;
+    float: left;
+    margin-left: 2vw;
+}
+.back_b>#back , .next_b>#next{
+    color: #f2f2f2;
+}
+
+.lst{
+    font-size: 20pt;
+    color: #f2f2f2;
+    padding-left: 0.9vw;
+    margin-bottom: 0.7vw;
+
+}
+
+.subhead{
+    border-style: solid none solid none;
+    border-width: 2pt;
+    font-size: 16pt;
+    padding-top: 0.3em;
+    padding-left: 0.7vw;
+    padding-bottom: 0.3em;
+    margin: 0pt;
+    margin-bottom: 1em;
+}
+
+.ul{
+    list-style: none;
+}
+
+#project_button{
+    cursor: pointer;
+    color: #f2f2f2;
+    text-decoration: none;
+    background-color: #858df1;
+    border: none;
+    font-size: 12pt;
+    padding : 0.5vw;
+    padding-right: 0.7vw;
+    border-radius: 12pt;
+}
+.form{
+    font-size: 16pt;
+    margin-bottom: 0.7em;
+}
+#remove_pref{
+    border: none;
+    font-size: 12pt;
+    color: #f2f2f2;
+    width: fit-content;
+    padding: 3pt;
+    border-radius: 2pt;
+    cursor: pointer;
+    background-color: #444a97;
+    margin-left: 12pt;
+    margin-top: 4pt;
+    position: absolute;
+
+}
+.remove{
+    text-decoration: none;
+    color: #f2f2f2;
+}
+
+.whiteline{
+    color: #f2f2f2;
+    width: 3pt;
+    width: 100%;
+}
+
+.heading_form{
+    font-size: 18pt;
+    color: #444a97;
+    background-color: #f2f2f2;
+    padding: 5pt;
+    border-radius: 5pt;
+    border-style: solid;
+    border-color: #444a97;
+}
+fieldset{
+    color: white;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2vw;
+    background-color: #858df1;
+}
+.course_head{
+    color: #444a97;
+    background-color: white;
+    text-decoration: none;
+}
+.course_legend{
+    background-color: white;
+    border-color: #858df1;
+    border-width: 2pt;
+}
